@@ -1,0 +1,22 @@
+SYSTEM ID: Quintile Harmonic Engine
+ENGINE VERSION: v2.0 (PLACEHOLDER - NOT IMPLEMENTED)
+REPRODUCIBILITY MODE: Deterministic – identical input must produce identical output
+
+PURPOSE:
+Generate quintile (5th-based) harmony as a separate engine from Quartal Engine.
+
+STATUS:
+This is a placeholder. Implementation will begin when explicitly requested.
+
+DESIGN:
+- Separate engine from Quartal Engine v1.x
+- Uses quintile stacking: n, n+4, n+7, optional n+11
+- Same MusicXML output format
+- Same guitar constraints
+- Same deterministic requirements
+
+NOTE:
+This prompt will be expanded when v2.0 implementation begins.
+
+
+

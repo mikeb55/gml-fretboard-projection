@@ -1,0 +1,59 @@
+                <button onclick="exportMusicXML()">Export MusicXML</button>
+            </div>
+            
+            <div class="panel">
+                <h2>🎹 Rhythm Pattern</h2>
+                <div id="rhythmDisplay"></div>
+                <div id="voiceDisplay" class="output">
+                    Rhythmic patterns will appear here...
+                </div>
+            </div>
+            
+            <div class="panel full-width">
+                <h2>📊 Generated Output</h2>
+                <div id="output" class="output">
+                    Ready to generate quintet with rhythmic patterns...
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+--
+    exportMusicXML() {
+        if (!this.currentQuintet) return null;
+        
+        const q = this.currentQuintet;
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const filename = `GML_Quintet_v3.1_${q.style.replace(/\s+/g, '_')}_${timestamp}.musicxml`;
+        
+        const [beats, beatType] = q.timeSig.split('/').map(Number);
+        
+        let xml = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="3.0">
+  <work><work-title>Quintet - ${q.style} (${q.timeSig})</work-title></work>
+  <identification>
+    <creator type="composer">GML-Quintet-Pro v3.1 Rhythmic</creator>
+    <encoding>
+      <software>GML-Quintet-Pro v3.1</software>
+      <encoding-date>${new Date().toISOString().split('T')[0]}</encoding-date>
+    </encoding>
+  </identification>
+  <part-list>
+--
+function exportMusicXML() {
+    const filename = engine.exportMusicXML();
+    if (filename) {
+        document.getElementById('output').textContent += `\n\nExported: ${filename}`;
+    } else {
+        alert('Generate quintet first');
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(generateQuintet, 100);
+});
+</script>
+</body>
+</html>

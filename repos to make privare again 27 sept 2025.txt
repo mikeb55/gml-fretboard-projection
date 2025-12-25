@@ -1,0 +1,6 @@
+https://github.com/mikeb55/ecosystem-docs
+https://github.com/mikeb55/GML-Composer-Profiles-Extension
+https://github.com/mikeb55/gml-triadgen
+https://github.com/mikeb55/gml-quartet-v2
+https://github.com/mikeb55/mrprofiles
+https://github.com/mikeb55/mike-gen-libs

@@ -1,0 +1,7 @@
+ntuser.*
+*.LOG1
+*.LOG2
+*.dat
+nul
+*.tmp
+extracted_code.txt

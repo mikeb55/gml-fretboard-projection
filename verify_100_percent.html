@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head><title>100% Verification</title></head>
+<body style="font-family: monospace; padding: 20px;">
+    <h1>Composer-Profiles 100% Complete Test</h1>
+    
+    <button onclick="testAll()">Test All Features</button>
+    <div id="output" style="background: #eee; padding: 20px; margin: 20px 0; white-space: pre;"></div>
+    
+    <script src="profile_loader.js"></script>
+    <script src="rhythm_patterns.js"></script>
+    <script src="complete_profiles.js"></script>
+    <script>
+        function testAll() {
+            const profile = window.profileLoader ? window.profileLoader.currentProfile : null;
+            
+            if (!profile) {
+                document.getElementById('output').textContent = 'No profile loaded - load one in Composer-Profiles first';
+                return;
+            }
+            
+            let out = '✅ PROFILE LOADED: ' + profile.name + '\n\n';
+            
+            // Test all components
+            out += '1. INTERVALS: ' + (profile.intervals ? '✅' : '❌') + '\n';
+            out += '   First 5: ' + profile.intervals.slice(0,5) + '\n\n';
+            
+            out += '2. RHYTHMS: ' + (window.extractRhythmPatterns ? '✅' : '❌') + '\n';
+            if (window.extractRhythmPatterns) {
+                out += '   Pattern: ' + window.extractRhythmPatterns(profile).slice(0,4) + '\n\n';
+            }
+            
+            out += '3. CHORD PROGRESSIONS: ' + (window.analyzeChordProgressions ? '✅' : '❌') + '\n';
+            if (window.analyzeChordProgressions) {
+                const chords = window.analyzeChordProgressions(profile);
+                out += '   Found: ' + chords.length + ' progressions\n\n';
+            }
+            
+            out += '4. VELOCITY DYNAMICS: ' + (window.extractVelocityPattern ? '✅' : '❌') + '\n';
+            if (window.extractVelocityPattern) {
+                const vel = window.extractVelocityPattern(profile);
+                out += '   Range: ' + vel.min + '-' + vel.max + ' (avg: ' + vel.average + ')\n\n';
+            }
+            
+            out += '5. PHRASE DETECTION: ' + (window.detectPhrases ? '✅' : '❌') + '\n';
+            if (window.detectPhrases) {
+                out += '   Phrases: ' + window.detectPhrases(profile) + '\n\n';
+            }
+            
+            out += '6. TEMPO: ' + profile.tempo + ' BPM ✅\n\n';
+            
+            // Calculate percentage
+            let complete = 0;
+            if (profile.intervals) complete += 20;
+            if (window.extractRhythmPatterns) complete += 20;
+            if (window.analyzeChordProgressions) complete += 20;
+            if (window.extractVelocityPattern) complete += 20;
+            if (window.detectPhrases) complete += 15;
+            if (profile.tempo) complete += 5;
+            
+            out += '====================================\n';
+            out += 'COMPOSER-PROFILES COMPLETION: ' + complete + '%\n';
+            if (complete === 100) {
+                out += '🎉 FULLY COMPLETE! 🎉';
+            }
+            
+            document.getElementById('output').textContent = out;
+        }
+    </script>
+</body>
+</html>

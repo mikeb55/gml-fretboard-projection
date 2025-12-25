@@ -1,0 +1,37 @@
+here is my file structure
+
+All Generative Muisc Language (GML) apps are here  
+C:\Users\mike\Documents\gml-workspace
+
+RiffGen is here:
+C:\Users\mike\Documents\gml-workspace\gml-riffgen
+
+TriadGen is here:
+C:\Users\mike\Documents\gml-workspace\triadgen
+
+Quartet Engine is here:
+C:\Users\mike\Documents\gml-workspace\quartet-engine
+
+Quintet Composer is here:
+C:\Users\mike\Documents\gml-workspace\quintet-composer
+
+Drum engine:
+C:\Users\mike\Documents\gml-workspace\drum-engine
+
+GCC:
+C:\Users\mike\Documents\gml-workspace\generative-chamber-composer
+
+Composers profiles:
+C:\Users\mike\Documents\gml-workspace\gml-composer-profiles-extension
+
+Guitarists profiles:
+C:\Users\mike\Documents\gml-workspace\GML-Guitar-Profiles-Library
+
+Gml-quartet:
+C:\Users\mike\Documents\gml-workspace\gml-quartet
+
+Inifinite Riff MAchine:
+C:\Users\mike\Documents\gml-workspace\infinite-riff-machine
+
+String Fx mapper:
+C:\Users\mike\Documents\gml-workspace\string-fx-mapper

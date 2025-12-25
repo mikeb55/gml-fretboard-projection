@@ -1,0 +1,14 @@
+{
+  "name": "Fixture D - Same melody as C, but C Lydian",
+  "version": "1.1",
+  "input": {
+    "melodyFile": "fixture_d_v1.1.xml",
+    "governingScale": "lydian",
+    "root": "C",
+    "density": 3
+  },
+  "description": "Same stepwise melody as Fixture C, but harmonized in C Lydian instead of D Dorian"
+}
+
+
+

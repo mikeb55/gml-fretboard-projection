@@ -1,0 +1,19 @@
+{
+  "name": "Fixture B - C Lydian, 8 bars, mixed 3-note and 4-note stacks",
+  "version": "1.0",
+  "input": {
+    "scale": "lydian",
+    "root": "C",
+    "octaves": 1,
+    "noteValue": "quarter",
+    "bars": 8,
+    "stackDistribution": {
+      "bars1-4": "3-note",
+      "bars5-8": "4-note"
+    }
+  },
+  "description": "C Lydian quartal harmony, 8 bars, bars 1-4 use 3-note stacks, bars 5-8 use 4-note stacks"
+}
+
+
+

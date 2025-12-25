@@ -1,0 +1,16 @@
+{
+  "name": "Fixture A - D Dorian, 1 octave, quarter-notes, 3-note stacks",
+  "version": "1.0",
+  "input": {
+    "scale": "dorian",
+    "root": "D",
+    "octaves": 1,
+    "noteValue": "quarter",
+    "stackType": "3-note",
+    "bars": 1
+  },
+  "description": "Simple D Dorian quartal harmony with 3-note stacks, one octave, quarter notes"
+}
+
+
+

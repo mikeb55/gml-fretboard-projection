@@ -1,0 +1,21 @@
+{
+  "name": "quartal-engine",
+  "version": "1.0.0",
+  "description": "Quartal Harmonic Engine - MusicXML Output Generator",
+  "main": "generate_v1.0.js",
+  "scripts": {
+    "test": "node tests/runners/run_all_tests.js",
+    "generate:v1.0": "node generate_v1.0.js",
+    "generate:v1.1": "node generate_v1.1.js"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.10"
+  },
+  "devDependencies": {},
+  "keywords": ["musicxml", "quartal", "harmony", "guitar"],
+  "author": "",
+  "license": "MIT"
+}
+
+
+

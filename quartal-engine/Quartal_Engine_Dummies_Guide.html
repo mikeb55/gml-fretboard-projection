@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; }
+        h3 { color: #7f8c8d; margin-top: 20px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        blockquote { border-left: 4px solid #3498db; padding-left: 15px; margin-left: 0; color: #555; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #3498db; color: white; }
+        @media print { body { max-width: 100%; } }
+    </style>
+</head>
+<body># Quartal Engine - Dummies Guide
+
+## What is the Quartal Engine?
+
+The Quartal Engine is a powerful tool that generates **quartal harmony** (chords built in fourths) for guitar. Instead of traditional triads (built in thirds), quartal harmony creates a modern, open sound perfect for jazz, fusion, and contemporary music.
+
+### Key Features
+
+- Generates 3-note and 4-note quartal chords
+- Supports all major modes (major, minor, dorian, mixolydian, lydian, phrygian, locrian)
+- Works with any root note (C, C#, D, Eb, E, F, F#, G, Ab, A, Bb, B)
+- Multiple note durations (half, quarter, eighth, sixteenth notes)
+- Guitar-friendly voicings (playable positions, 5-fret max reach)
+- Outputs MusicXML files that open directly in Sibelius, Finale, Guitar Pro 8, MuseScore, and Cubase
+
+---
+
+## Basic Command Structure
+
+``<code>
+Generate [ROOT] [SCALE] quartals, [BARS] bars, [DURATION]
+</code>`<code>
+
+**Example:**
+</code>`<code>
+Generate C major quartals, 4 bars, quarter notes
+</code>`<code>
+
+---
+
+## 20+ Command Examples
+
+### 3-Note Quartals (Triads)
+
+#### Quarter Notes (Standard Tempo)
+
+1. **C Major - 4 Bars**
+   </code>`<code>
+   Generate C major quartals, 4 bars, quarter notes
+   </code>`<code>
+   *Result: 4 bars, 12 notes (3-note quartal stacks)*
+
+2. **D Dorian - 8 Bars**
+   </code>`<code>
+   Generate D dorian quartals, 8 bars, quarter notes
+   </code>`<code>
+   *Result: 8 bars, 24 notes*
+
+3. **E Minor - Full Scale (7 Bars)**
+   </code>`<code>
+   Generate a musicxml of the E minor scale harmonised as quartals
+   </code>`<code>
+   *Result: 7 bars, 21 notes (one quartal per scale degree)*
+
+4. **F Lydian - 4 Bars**
+   </code>`<code>
+   Generate F lydian quartals, 4 bars, quarter notes
+   </code>`<code>
+   *Result: 4 bars, 12 notes*
+
+5. **G Mixolydian - 6 Bars**
+   </code>`<code>
+   Generate G mixolydian quartals, 6 bars, quarter notes
+   </code>`<code>
+   *Result: 6 bars, 18 notes*
+
+#### Half Notes (Slow, Sustained)
+
+6. **A Minor - 4 Bars**
+   </code>`<code>
+   Generate A minor quartals, 4 bars, half notes
+   </code>`<code>
+   *Result: 4 bars, 12 notes, half-note duration (slow, sustained)*
+
+7. **Bb Major - Full Scale**
+   </code>`<code>
+   Generate a musicxml of the Bb major scale harmonised as quartals, half notes
+   </code>`<code>
+   *Result: 7 bars, 21 notes, half-note duration*
+
+8. **C# Locrian - 4 Bars**
+   </code>`<code>
+   Generate C# locrian quartals, 4 bars, half notes
+   </code>`<code>
+   *Result: 4 bars, 12 notes, half-note duration*
+
+#### Eighth Notes (Fast, Rhythmic)
+
+9. **D Dorian - 8 Bars**
+   </code>`<code>
+   Generate D dorian quartals, 8 bars, eighth notes
+   </code>`<code>
+   *Result: 8 bars, 24 notes, eighth-note duration (fast, rhythmic)*
+
+10. **E Phrygian - 4 Bars**
+    </code>`<code>
+    Generate E phrygian quartals, 4 bars, eighth notes
+    </code>`<code>
+    *Result: 4 bars, 12 notes, eighth-note duration*
+
+11. **F# Lydian - 12 Bars**
+    </code>`<code>
+    Generate F# lydian quartals, 12 bars, eighth notes
+    </code>`<code>
+    *Result: 12 bars, 36 notes, eighth-note duration*
+
+#### Sixteenth Notes (Very Fast, Dense)
+
+12. **G Mixolydian - 4 Bars**
+    </code>`<code>
+    Generate G mixolydian quartals, 4 bars, sixteenth notes
+    </code>`<code>
+    *Result: 4 bars, 12 notes, sixteenth-note duration (very fast, dense)*
+
+13. **A Minor - 8 Bars**
+    </code>`<code>
+    Generate A minor quartals, 8 bars, 16th notes
+    </code>`<code>
+    *Result: 8 bars, 24 notes, sixteenth-note duration*
+
+### 4-Note Quartals (Extended Chords)
+
+#### Quarter Notes
+
+14. **C Major - 4 Bars**
+    </code>`<code>
+    Generate C major 4-note quartals, 4 bars, quarter notes
+    </code>`<code>
+    *Result: 4 bars, 16 notes (4-note quartal stacks)*
+
+15. **D Dorian - Full Scale**
+    </code>`<code>
+    Generate a musicxml of the D dorian scale harmonised as 4-note quartals
+    </code>`<code>
+    *Result: 7 bars, 28 notes (one 4-note quartal per scale degree)*
+
+16. **E Minor - 8 Bars**
+    </code>`<code>
+    Generate E minor 4-note quartals, 8 bars, quarter notes
+    </code>`<code>
+    *Result: 8 bars, 32 notes*
+
+#### Half Notes
+
+17. **F Lydian - 4 Bars**
+    </code>`<code>
+    Generate F lydian 4-note quartals, 4 bars, half notes
+    </code>`<code>
+    *Result: 4 bars, 16 notes, half-note duration*
+
+18. **G Mixolydian - Full Scale**
+    </code>`<code>
+    Generate a musicxml of the G mixolydian scale harmonised as 4-note quartals, half notes
+    </code>`<code>
+    *Result: 7 bars, 28 notes, half-note duration*
+
+#### Eighth Notes
+
+19. **A Minor - 4 Bars**
+    </code>`<code>
+    Generate A minor 4-note quartals, 4 bars, eighth notes
+    </code>`<code>
+    *Result: 4 bars, 16 notes, eighth-note duration*
+
+20. **Bb Major - 8 Bars**
+    </code>`<code>
+    Generate Bb major 4-note quartals, 8 bars, eighth notes
+    </code>`<code>
+    *Result: 8 bars, 32 notes, eighth-note duration*
+
+#### Sixteenth Notes
+
+21. **C# Locrian - 4 Bars**
+    </code>`<code>
+    Generate C# locrian 4-note quartals, 4 bars, 16th notes
+    </code>`<code>
+    *Result: 4 bars, 16 notes, sixteenth-note duration*
+
+22. **D Dorian - 8 Bars**
+    </code>`<code>
+    Generate D dorian 4-note quartals, 8 bars, sixteenth notes
+    </code>`<code>
+    *Result: 8 bars, 32 notes, sixteenth-note duration*
+
+---
+
+## Understanding the Output
+
+### File Naming
+
+Files are automatically named with descriptive information:
+- Format: </code>{root}-{scale}-quartal-{stackType}-{bars}bars{fullscale}-{timestamp}.MusicXML<code>
+- Example: </code>D-dorian-quartal-3note-4bars-1234567890.MusicXML<code>
+
+### What You Get
+
+Each generated file contains:
+- **Voice 1** (top voice) = Highest note - can be used as melody
+- **Voice 2, 3, 4** = Lower harmony voices (quartal support)
+- All notes play **simultaneously as chords** (not arpeggios)
+- Guitar-friendly voicings (playable positions)
+
+### Opening the Files
+
+The </code>.MusicXML<code> files open directly in:
+- Sibelius
+- Finale
+- Guitar Pro 8
+- MuseScore
+- Cubase
+- Any MusicXML-compatible software
+
+---
+
+## Practical Application: Creating a 3-Chorus Solo
+
+### Overview
+
+A **3-chorus solo** is a common jazz structure where you play three complete cycles (choruses) over a chord progression, each with increasing intensity and complexity.
+
+### Step-by-Step Workflow
+
+#### Chorus 1: Establish the Harmony
+
+**Goal:** Create a foundation with clear quartal harmony
+
+1. **Generate the base progression**
+   </code>`<code>
+   Generate D dorian quartals, 4 bars, half notes
+   </code>`<code>
+   - Slow, sustained chords
+   - Establishes the harmonic foundation
+   - Use Voice 1 (top voice) as your starting melody line
+
+2. **Copy to your DAW/notation software**
+   - Import the MusicXML into Sibelius/Finale
+   - This becomes your first chorus foundation
+
+#### Chorus 2: Add Movement
+
+**Goal:** Increase rhythmic activity while maintaining harmony
+
+3. **Generate faster harmonic rhythm**
+   </code>`<code>
+   Generate D dorian quartals, 4 bars, quarter notes
+   </code>`<code>
+   - Medium tempo
+   - More movement than Chorus 1
+   - Develop melodic ideas using Voice 1
+
+4. **Optional: Add 4-note quartals for richness**
+   </code>`<code>
+   Generate D dorian 4-note quartals, 4 bars, quarter notes
+   </code>`<code>
+   - Richer harmonic texture
+   - More notes to work with melodically
+
+#### Chorus 3: Maximum Intensity
+
+**Goal:** Fast, dense, complex harmonic rhythm
+
+5. **Generate fast harmonic rhythm**
+   </code>`<code>
+   Generate D dorian quartals, 4 bars, eighth notes
+   </code>`<code>
+   - Fast, rhythmic
+   - Creates intensity and forward motion
+
+6. **Or use sixteenth notes for maximum density**
+   </code>`<code>
+   Generate D dorian quartals, 4 bars, sixteenth notes
+   </code>`<code>
+   - Very fast, dense texture
+   - Maximum intensity
+
+### Complete 3-Chorus Solo Example
+
+**Song: "So What" (D Dorian)**
+
+**Chorus 1 (Establishment):**
+</code>`<code>
+Generate D dorian quartals, 8 bars, half notes
+</code>`<code>
+- Slow, sustained
+- Clear harmonic foundation
+- Use top voice as melody guide
+
+**Chorus 2 (Development):**
+</code>`<code>
+Generate D dorian quartals, 8 bars, quarter notes
+</code>`<code>
+- Medium tempo
+- More rhythmic activity
+- Develop melodic ideas
+
+**Chorus 3 (Climax):**
+</code>`<code>
+Generate D dorian quartals, 8 bars, eighth notes
+</code>`<code>
+- Fast, intense
+- Maximum rhythmic density
+- Build to climax
+
+### Advanced: Mixing 3-Note and 4-Note Quartals
+
+**Chorus 1:**
+</code>`<code>
+Generate D dorian quartals, 8 bars, half notes
+</code>`<code>
+(3-note quartals - open, clear)
+
+**Chorus 2:**
+</code>`<code>
+Generate D dorian 4-note quartals, 8 bars, quarter notes
+</code>`<code>
+(4-note quartals - richer texture)
+
+**Chorus 3:**
+</code>`<code>
+Generate D dorian quartals, 8 bars, eighth notes
+</code>`<code>
+(3-note quartals - fast, clear)
+
+### Using Different Scales for Variation
+
+**Chorus 1: D Dorian**
+</code>`<code>
+Generate D dorian quartals, 8 bars, half notes
+</code>`<code>
+
+**Chorus 2: D Minor (Aeolian)**
+</code>`<code>
+Generate D minor quartals, 8 bars, quarter notes
+</code>`<code>
+(Slight harmonic variation)
+
+**Chorus 3: D Dorian (Return)**
+</code>`<code>
+Generate D dorian quartals, 8 bars, eighth notes
+</code>`<code>
+(Return to original, but faster)
+
+---
+
+## Tips for Using Quartal Harmony in Solos
+
+### 1. Use the Top Voice as Melody
+
+- **Voice 1** (highest note) naturally serves as a melody line
+- Develop melodic phrases from these top notes
+- The quartal harmony below provides modern, open support
+
+### 2. Mix Durations for Interest
+
+- Start slow (half notes) â†’ Build to fast (eighth/sixteenth notes)
+- Creates natural intensity curve
+- Mimics how real solos develop
+
+### 3. Combine 3-Note and 4-Note Quartals
+
+- 3-note quartals = Open, clear, less dense
+- 4-note quartals = Richer, more complex, denser
+- Use 3-note for clarity, 4-note for richness
+
+### 4. Use Full Scale Harmonization
+
+- Command: </code>Generate a musicxml of the [ROOT] [SCALE] scale harmonised as quartals<code>
+- Gets all 7 scale degrees
+- Perfect for exploring the entire scale harmonically
+
+### 5. Experiment with Different Modes
+
+- Same root, different mode = Different harmonic color
+- D Dorian vs D Minor = Subtle but important differences
+- Great for creating variation in multi-chorus solos
+
+---
+
+## Common Use Cases
+
+### 1. Chord Progressions for Practice
+
+Generate quartal harmony for any scale/mode to practice:
+</code>`<code>
+Generate C major quartals, 4 bars, quarter notes
+</code>`<code>
+
+### 2. Composition Foundation
+
+Use quartal harmony as a starting point for compositions:
+</code>`<code>
+Generate a musicxml of the E minor scale harmonised as quartals
+</code>`<code>
+
+### 3. Jazz Solo Preparation
+
+Create harmonic frameworks for improvisation:
+</code>`<code>
+Generate G mixolydian quartals, 8 bars, quarter notes
+</code>`<code>
+
+### 4. Modern Sound Exploration
+
+Experiment with quartal harmony's unique sound:
+</code>`<code>
+Generate F# lydian 4-note quartals, 4 bars, half notes
+</code>`<code>
+
+---
+
+## Quick Reference
+
+### Duration Keywords
+
+- </code>half<code> or </code>half notes<code> = Slow, sustained
+- </code>quarter<code> or </code>quarter notes<code> = Standard tempo (default)
+- </code>eighth<code>, </code>8th<code>, </code>eighth notes<code>, </code>8th notes<code> = Fast, rhythmic
+- </code>sixteenth<code>, </code>16th<code>, </code>sixteenth notes<code>, </code>16th notes<code> = Very fast, dense
+
+### Stack Types
+
+- **3-note quartals** = Default (just say "quartals")
+- **4-note quartals** = Say "4-note quartals" or "4-note stacks"
+
+### Full Scale Harmonization
+
+- Add: </code>Generate a musicxml of the [ROOT] [SCALE] scale harmonised as quartals<code>
+- Automatically generates 7 bars (one per scale degree)
+
+### Supported Scales/Modes
+
+- Major (Ionian)
+- Minor (Aeolian)
+- Dorian
+- Mixolydian
+- Lydian
+- Phrygian
+- Locrian
+
+### Supported Roots
+
+C, C#, Db, D, D#, Eb, E, F, F#, Gb, G, G#, Ab, A, A#, Bb, B
+
+---
+
+## Troubleshooting
+
+### Notes Playing as Arpeggios Instead of Chords?
+
+**Fixed!** The engine now generates proper chord notation. All notes are in voice 1 with </code><chord/><code> tags, so they play simultaneously.
+
+### File Won't Open?
+
+- Ensure the file has </code>.MusicXML<code> extension
+- Try opening in MuseScore (free, excellent MusicXML support)
+- Check that your software supports MusicXML 3.1
+
+### Wrong Scale/Mode?
+
+- Check spelling: "dorian" not "dorian mode"
+- Root note must come before scale name: "D dorian" not "dorian D"
+- Use: </code>Generate [ROOT] [SCALE] quartals, [BARS] bars<code>
+
+---
+
+## Summary
+
+The Quartal Engine is a powerful tool for generating modern quartal harmony. With 20+ command examples covering different durations, stack types, and scales, you can create harmonic foundations for:
+
+- Practice exercises
+- Composition
+- Jazz solo preparation
+- Modern harmony exploration
+- **3-chorus solo development** (slow â†’ medium â†’ fast)
+
+Remember: The top voice (Voice 1) is your melody guide, and the quartal harmony below provides modern, open-sounding support. Experiment with different durations, stack types, and scales to find the perfect sound for your music!
+
+---
+
+## Getting Started
+
+1. Open the Quartal Engine CLI: </code>node quartal-cli.js<code>
+2. Type a command: </code>Generate D dorian quartals, 4 bars, quarter notes<code>
+3. Open the generated </code>.MusicXML` file in your notation software
+4. Use Voice 1 as melody, Voices 2-4 as harmony
+5. Experiment and create!
+
+**Happy quartal harmonizing!**
+
+</body></html>

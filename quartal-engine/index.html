@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GML · Quartal Harmonic Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .input-section {
+            margin: 20px 0;
+        }
+
+        .input-section label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .command-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-family: inherit;
+        }
+
+        .command-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #4a90e2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #357abd;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .examples {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f8ff;
+            border-left: 4px solid #4a90e2;
+            border-radius: 4px;
+        }
+
+        .examples h3 {
+            margin-bottom: 10px;
+            color: #222;
+            font-size: 1em;
+        }
+
+        .examples ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .examples li {
+            margin: 8px 0;
+            color: #555;
+            font-size: 0.9em;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .examples li:hover {
+            background: #e0f0ff;
+        }
+
+        .output-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .output-section.visible {
+            display: block;
+        }
+
+        .output-section h3 {
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .output-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info-box {
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            color: #856404;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GML · Quartal Harmonic Engine</h1>
+            <p class="subtitle">Natural Language MusicXML Generator</p>
+        </header>
+
+        <div class="info-box">
+            <p><strong>Note:</strong> This web interface is a preview. For full functionality, use the desktop shortcut or run <code>node quartal-cli.js</code> from the command line.</p>
+        </div>
+
+        <div class="input-section">
+            <label for="command">Enter your command:</label>
+            <input 
+                type="text" 
+                id="command" 
+                class="command-input" 
+                placeholder="Generate a musicxml of the C major scale harmonised as quartals"
+                onkeypress="if(event.key === 'Enter') generateMusicXML()"
+            />
+        </div>
+
+        <div class="examples">
+            <h3>Example Commands (click to use):</h3>
+            <ul>
+                <li onclick="setCommand('Generate a musicxml of the C major scale harmonised as quartals')">
+                    Generate a musicxml of the C major scale harmonised as quartals
+                </li>
+                <li onclick="setCommand('Generate D dorian quartals, 4 bars')">
+                    Generate D dorian quartals, 4 bars
+                </li>
+                <li onclick="setCommand('Generate F# lydian 4-note stacks, 8 bars')">
+                    Generate F# lydian 4-note stacks, 8 bars
+                </li>
+                <li onclick="setCommand('Generate A minor quartals, 2 bars')">
+                    Generate A minor quartals, 2 bars
+                </li>
+            </ul>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="generateMusicXML()">Generate MusicXML</button>
+            <button class="btn-secondary" onclick="clearOutput()">Clear</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div id="output-section" class="output-section">
+            <h3>Generated MusicXML</h3>
+            <div id="output-info"></div>
+            <div class="output-actions">
+                <button class="btn-primary" onclick="downloadXML()">Download MusicXML</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let generatedXML = '';
+
+        function setCommand(cmd) {
+            document.getElementById('command').value = cmd;
+        }
+
+        function parseCommand(command) {
+            const lower = command.toLowerCase();
+            
+            // Extract root note
+            const rootPattern = /\b([A-G][#b]?)\b/i;
+            const rootMatch = command.match(rootPattern);
+            const root = rootMatch ? rootMatch[1] : 'C';
+            
+            // Extract scale/mode
+            let scale = 'major';
+            if (lower.includes('minor') || lower.includes('aeolian')) scale = 'minor';
+            else if (lower.includes('dorian')) scale = 'dorian';
+            else if (lower.includes('mixolydian')) scale = 'mixolydian';
+            else if (lower.includes('lydian')) scale = 'lydian';
+            else if (lower.includes('phrygian')) scale = 'phrygian';
+            else if (lower.includes('locrian')) scale = 'locrian';
+            else if (lower.includes('major') || lower.includes('ionian')) scale = 'major';
+            
+            // Extract stack type
+            let stackType = '3-note';
+            if (lower.includes('4-note') || lower.includes('four note') || lower.includes('4 note')) stackType = '4-note';
+            
+            // Extract bars
+            const barMatch = command.match(/\b(\d+)\s*(?:bar|bars|measure|measures)\b/i);
+            const bars = barMatch ? parseInt(barMatch[1]) : 1;
+            
+            return { root, scale, stackType, bars };
+        }
+
+        let currentParams = null; // Store current generation parameters for filename
+
+        function generateMusicXML() {
+            const command = document.getElementById('command').value.trim();
+            if (!command) {
+                showStatus('Please enter a command', 'error');
+                return;
+            }
+
+            try {
+                const params = parseCommand(command);
+                currentParams = params; // Store for filename generation
+                showStatus(`Generating: ${params.root} ${params.scale}, ${params.stackType} stacks, ${params.bars} bar(s)...`, 'success');
+                
+                // For web interface, show a message that CLI is needed
+                generatedXML = `<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Quartal Harmonic Engine - Generated MusicXML
+  
+  Parameters:
+  - Root: ${params.root}
+  - Scale: ${params.scale}
+  - Stack Type: ${params.stackType}
+  - Bars: ${params.bars}
+  
+  Note: This is a preview. For actual MusicXML generation,
+  please use the desktop shortcut or run: node quartal-cli.js
+  
+  Then type: ${command}
+-->`;
+                
+                document.getElementById('output-info').textContent = 
+                    `Preview generated. For actual MusicXML, use the CLI: node quartal-cli.js`;
+                document.getElementById('output-section').classList.add('visible');
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function clearOutput() {
+            document.getElementById('command').value = '';
+            document.getElementById('output-section').classList.remove('visible');
+            generatedXML = '';
+        }
+
+        function downloadXML() {
+            if (!generatedXML) return;
+            const blob = new Blob([generatedXML], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            
+            // Generate descriptive filename
+            if (currentParams) {
+                const root = currentParams.root.replace(/#/g, 'sharp').replace(/b/g, 'flat');
+                const stackType = currentParams.stackType === '3-note' ? '3note' : '4note';
+                const fullscale = currentParams.bars === 7 ? '-fullscale' : '';
+                a.download = `${root}-${currentParams.scale}-quartal-${stackType}-${currentParams.bars}bars${fullscale}-${Date.now()}.musicxml`;
+            } else {
+                // Fallback if params not available
+                a.download = `quartal-harmony-${Date.now()}.musicxml`;
+            }
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+AUTOMATED STOPS CODE SEARCH - Sat Sep 20 15:42:54 GTBDT 2025
+==========================================
+
+PHASE 1: SEARCHING FOR STOPS TERMINOLOGY
+==========================================
+Searching: Multiple stops
+Pattern: multiple.*stop
+----------------------------------------
+  Found 0 matches
+
+Searching: Double stops
+Pattern: double.*stop
+----------------------------------------
+  Found 0 matches
+
+Searching: Triple stops
+Pattern: triple.*stop
+----------------------------------------
+  Found 0 matches
+
+Searching: Quadruple stops
+Pattern: quadruple.*stop
+----------------------------------------
+  Found 0 matches
+
+Searching: Sibelius references
+Pattern: sibelius
+----------------------------------------
+  Found 11 matches
+  TOP MATCHES:
+./final-midi-fix.js:278:  console.log('Open verified.mid in Guitar Pro or Sibelius to confirm');
+./final-working-midi.js:175:console.log('   - Guitar Pro or Sibelius (full test)');
+./GML-Codex/gml-CompositionHub/README.md:10:- 📄 **MusicXML export** (Sibelius compatible)
+./gml-riffgen/create-midi.js:63:console.log('\n🎉 SUCCESS! Open working.mid in Guitar Pro or Sibelius');
+./gml-riffgen/final-working-midi.js:175:console.log('   - Guitar Pro or Sibelius (full test)');
+./gml-riffgen/quartet-complete.js:492:    console.log('   in MuseScore or Sibelius to verify');
+./gml-riffgen/README.md:17:- Compatible with Sibelius, MuseScore, Finale 
+./index.html:181:            <p><strong>5. Open:</strong> Use downloaded file in MuseScore, Sibelius, or Finale</p>
+./triadgen/Documents/gml-workspace/final-midi-fix.js:278:  console.log('Open verified.mid in Guitar Pro or Sibelius to confirm');
+./triadgen/Documents/gml-workspace/final-working-midi.js:175:console.log('   - Guitar Pro or Sibelius (full test)');
+
+
+Searching: Check stop functions
+Pattern: check.*stop
+----------------------------------------
+  Found 0 matches
+
+Searching: Stop validation
+Pattern: stop.*validation
+----------------------------------------
+  Found 0 matches
+
+Searching: Playable stops
+Pattern: playable.*stop
+----------------------------------------
+  Found 0 matches
+
+PHASE 2: SEARCHING FOR VALIDATION FUNCTIONS
+==========================================
+Searching: Validation function names
+Pattern: validateStop\|isPlayable\|canPlay
+----------------------------------------
+  Found 6 matches
+  TOP MATCHES:
+./GML-Guitar-Profiles-Library/complete-demo-test.js:267:      console.log(`    Playable: ${result.isPlayable ? '✓ Yes' : '✗ No'}`);
+./GML-Guitar-Profiles-Library/examples/basic-usage.js:48:  console.log('  Playable:', check.isPlayable);
+./GML-Guitar-Profiles-Library/index.js:1145:    return { isPlayable: true, difficulty: 'medium' };
+./GML-Guitar-Profiles-Library/src/core/PlayabilityChecker.js:7:    let isPlayable = true;
+./GML-Guitar-Profiles-Library/src/core/PlayabilityChecker.js:15:        isPlayable = false;
+./GML-Guitar-Profiles-Library/src/core/PlayabilityChecker.js:24:      isPlayable,
+
+
+Searching: Finger span checks
+Pattern: fingerSpan\|fingerStretch
+----------------------------------------
+  Found 0 matches
+
+Searching: String distance calculations
+Pattern: stringDistance\|adjacentString
+----------------------------------------
+  Found 0 matches
+
+Searching: Verification functions
+Pattern: checkMultiple\|verifyStop
+----------------------------------------
+  Found 0 matches
+
+PHASE 3: SEARCHING FOR STRING INSTRUMENT TERMS
+==========================================
+Searching: Fingerboard references
+Pattern: fingerboard\|fretboard
+----------------------------------------
+  Found 2 matches
+  TOP MATCHES:
+./GML-Guitar-Profiles-Library/complete-demo-test.js:42:// Helper to visualize chord on fretboard
+./GML-Guitar-Profiles-Library/complete-demo-test.js:49:  const fretboard = [];
+
+
+Searching: String positions
+Pattern: open.*string\|string.*position
+----------------------------------------
+  Found 11 matches
+  TOP MATCHES:
+./BULLETPROOF_GUITAR_QUINTET_X100.html:48:        <div id="output">Ready to generate guitar + string quartet composition...</div>
+./COMPLETE_QUINTET_GENERATOR.html:620:                const json = JSON.stringify(generator.composition, null, 2);
+./GML-Guitar-Profiles-Library/src/core/VoicingEngine.js:43:    const openStrings = [40, 45, 50, 55, 59, 64];
+./GML-Guitar-Profiles-Library/src/core/VoicingEngine.js:44:    return positions.map((pos, i) => pos >= 0 ? openStrings[i] + pos : null);
+./GML-Guitar-Profiles-Library/src/utils/GuitarConstants.js:7:  STANDARD_OPEN_STRINGS: {
+./gml-riffgen/FretPositionOptimizer.js:57:                string: position.string,
+./gml-riffgen/FretPositionOptimizer.js:64:                previousString = position.string;
+./gml-riffgen/integrate-optimizer.js:25:        string: positions[i].string + 1, // Convert 0-based to 1-based
+./gml-riffgen/optimizer-integration.html:37:                // Prefer open strings
+./quintet-composer/README.md:3:Combine Electric Guitar with String Quartet for 5-Part Compositions
+
+
+Searching: Bowing techniques
+Pattern: bowing.*technique\|bow.*mark
+----------------------------------------
+  Found 0 matches
+
+Searching: Playing techniques
+Pattern: pizzicato\|arco\|col legno
+----------------------------------------
+  Found 16 matches
+  TOP MATCHES:
+./generative-chamber-composer/add_midi_export.html:137:                return Array.from(str).map(c => c.charCodeAt(0));
+./gml-composer-profiles-extension/index.html:104:            if (String.fromCharCode(...data.slice(0, 4)) !== 'MThd') {
+./gml-composer-profiles-extension/index.html:114:                if (String.fromCharCode(...data.slice(pos, pos + 4)) === 'MTrk') {
+./GML-Guitar-Profiles-Library/src/core/PlayabilityChecker.js:1:import { GUITAR_CONSTANTS } from '../utils/GuitarConstants.js';
+./GML-Guitar-Profiles-Library/src/core/VoicingEngine.js:1:import { GUITAR_CONSTANTS } from '../utils/GuitarConstants.js';
+./gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js:574:         '&#'+c.charCodeAt()+';'
+./gml-quartet/node_modules/@xmldom/xmldom/lib/sax.js:53:	function fixedFromCharCode(code) {
+./gml-quartet/node_modules/@xmldom/xmldom/lib/sax.js:54:		// String.prototype.fromCharCode does not supports
+./gml-quartet/node_modules/@xmldom/xmldom/lib/sax.js:61:			return String.fromCharCode(surrogate1, surrogate2);
+./gml-quartet/node_modules/@xmldom/xmldom/lib/sax.js:63:			return String.fromCharCode(code);
+
+
+PHASE 4: CHECKING EACH PROJECT INDIVIDUALLY
+==========================================
+Checking gml-quartet...
+Project: gml-quartet
+----------------------------------------
+  Stops mentions: 13
+  Validation mentions: 76
+  String instrument mentions: 291
+  RELEVANT CODE FOUND:
+gml-quartet/gml-shared-memory.js-73-      const wrapper = JSON.parse(stored);
+gml-quartet/gml-shared-memory.js-74-      
+gml-quartet/gml-shared-memory.js:75:      // Validate structure
+gml-quartet/gml-shared-memory.js-76-      if (!wrapper.data || !wrapper.app) {
+gml-quartet/gml-shared-memory.js-77-        console.warn('Invalid stored data structure');
+--
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-387-	 * - There is no interface/class `XMLDocument`, it returns a `Document` instance.
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-388-	 * - `contentType`, `encoding`, `mode`, `origin`, `url` fields are currently not declared.
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js:389:	 * - this implementation is not validating names or qualified names
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-390-	 *   (when parsing XML strings, the SAX parser takes care of that)
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-391-	 *
+--
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-399-	 * @see https://dom.spec.whatwg.org/#dom-domimplementation-createdocument  DOM Level 2 Core
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-400-	 *
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js:401:	 * @see https://dom.spec.whatwg.org/#validate-and-extract DOM: Validate and extract
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-402-	 * @see https://www.w3.org/TR/xml/#NT-NameStartChar XML Spec: Names
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-403-	 * @see https://www.w3.org/TR/xml-names/#ns-qualnames XML Namespaces: Qualified names
+--
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-421-	 *
+gml-quartet/node_modules/@xmldom/xmldom/lib/dom.js-422-	 * __This behavior is slightly different from the in the specs__:
+
+Checking quartet-engine...
+Project: quartet-engine
+----------------------------------------
+  Stops mentions: 11
+  Validation mentions: 44
+  String instrument mentions: 50
+  RELEVANT CODE FOUND:
+quartet-engine/index.html-75-gain.gain.exponentialRampToValueAtTime(0.001, now + 1);
+quartet-engine/index.html-76-osc.start(now);
+quartet-engine/index.html:77:osc.stop(now + 1);
+quartet-engine/index.html-78-});
+quartet-engine/index.html-79-document.getElementById('display').innerHTML = 'Audio test: C major chord played';
+--
+quartet-engine/index.html-128-gain.gain.linearRampToValueAtTime(0, startTime + 0.4);
+quartet-engine/index.html-129-osc.start(startTime);
+quartet-engine/index.html:130:osc.stop(startTime + 0.5);
+quartet-engine/index.html-131-});
+quartet-engine/index.html-132-});
+--
+quartet-engine/quartet-engine-enhanced.html-75-gain.gain.exponentialRampToValueAtTime(0.001, now + 1);
+quartet-engine/quartet-engine-enhanced.html-76-osc.start(now);
+quartet-engine/quartet-engine-enhanced.html:77:osc.stop(now + 1);
+quartet-engine/quartet-engine-enhanced.html-78-});
+quartet-engine/quartet-engine-enhanced.html-79-document.getElementById('display').innerHTML = 'Audio test: C major chord played';
+--
+quartet-engine/quartet-engine-enhanced.html-128-gain.gain.linearRampToValueAtTime(0, startTime + 0.4);
+quartet-engine/quartet-engine-enhanced.html-129-osc.start(startTime);
+
+Checking string-fx-mapper...
+Project: string-fx-mapper
+----------------------------------------
+  Stops mentions: 5
+  Validation mentions: 42
+  String instrument mentions: 6
+  RELEVANT CODE FOUND:
+
+Checking generative-chamber-composer...
+Project: generative-chamber-composer
+----------------------------------------
+  Stops mentions: 8
+  Validation mentions: 42
+  String instrument mentions: 30
+  RELEVANT CODE FOUND:
+generative-chamber-composer/gcc_module1.html-146-            <button onclick="generate()">🎵 Generate Chamber Piece</button>
+generative-chamber-composer/gcc_module1.html-147-            <button onclick="playPiece()">▶️ Play</button>
+generative-chamber-composer/gcc_module1.html:148:            <button onclick="stopPlayback()">⏹ Stop</button>
+generative-chamber-composer/gcc_module1.html-149-            <button onclick="exportJSON()">💾 Export JSON</button>
+generative-chamber-composer/gcc_module1.html-150-            <button onclick="exportMusicXML()">📄 Export MusicXML</button>
+--
+generative-chamber-composer/gcc_module1.html-290-        }
+generative-chamber-composer/gcc_module1.html-291-        
+generative-chamber-composer/gcc_module1.html:292:        function stopPlayback() {
+generative-chamber-composer/gcc_module1.html:293:            Tone.Transport.stop();
+generative-chamber-composer/gcc_module1.html-294-            playing = false;
+generative-chamber-composer/gcc_module1.html-295-        }
+
+Checking triadgen...
+Project: triadgen
+----------------------------------------
+  Stops mentions: 37
+  Validation mentions: 126
+  String instrument mentions: 80
+  RELEVANT CODE FOUND:
+triadgen/backups/backup_triadgen.html_20250917_162540.html-283-                        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.5);
+triadgen/backups/backup_triadgen.html_20250917_162540.html-284-                        osc.start(time);
+triadgen/backups/backup_triadgen.html_20250917_162540.html:285:                        osc.stop(time + 0.5);
+triadgen/backups/backup_triadgen.html_20250917_162540.html-286-                    });
+triadgen/backups/backup_triadgen.html_20250917_162540.html-287-                };
+--
+triadgen/Documents/gml-workspace/gml-enhancement-suite/app-with-sound.html-82-            
+triadgen/Documents/gml-workspace/gml-enhancement-suite/app-with-sound.html-83-            oscillator.start(audioContext.currentTime);
+triadgen/Documents/gml-workspace/gml-enhancement-suite/app-with-sound.html:84:            oscillator.stop(audioContext.currentTime + duration/1000);
+triadgen/Documents/gml-workspace/gml-enhancement-suite/app-with-sound.html-85-        }
+triadgen/Documents/gml-workspace/gml-enhancement-suite/app-with-sound.html-86-        
+--
+triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html-125-            gain.gain.exponentialRampToValueAtTime(0.01, audio.currentTime + 0.5);
+triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html-126-            osc.start();
+triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html:127:            osc.stop(audio.currentTime + 0.5);
+triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html-128-            
+triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html-129-            setTimeout(() => {
+--
+triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html-136-                gain2.gain.exponentialRampToValueAtTime(0.01, audio.currentTime + 0.5);
+triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html-137-                osc2.start();
+
+Checking quintet-composer...
+Project: quintet-composer
+----------------------------------------
+  Stops mentions: 8
+  Validation mentions: 71
+  String instrument mentions: 198
+  RELEVANT CODE FOUND:
+quintet-composer/backup-20250917/index.html-470-                        
+quintet-composer/backup-20250917/index.html-471-                        osc.start(startTime);
+quintet-composer/backup-20250917/index.html:472:                        osc.stop(startTime + beatLength * 0.2);
+quintet-composer/backup-20250917/index.html-473-                    });
+quintet-composer/backup-20250917/index.html-474-                }
+--
+quintet-composer/gml-shared-memory.js-73-      const wrapper = JSON.parse(stored);
+quintet-composer/gml-shared-memory.js-74-      
+quintet-composer/gml-shared-memory.js:75:      // Validate structure
+quintet-composer/gml-shared-memory.js-76-      if (!wrapper.data || !wrapper.app) {
+quintet-composer/gml-shared-memory.js-77-        console.warn('Invalid stored data structure');
+--
+quintet-composer/index.html-470-                        
+quintet-composer/index.html-471-                        osc.start(startTime);
+quintet-composer/index.html:472:                        osc.stop(startTime + beatLength * 0.2);
+quintet-composer/index.html-473-                    });
+quintet-composer/index.html-474-                }
+
+Checking infinite-riff-machine...
+Project: infinite-riff-machine
+----------------------------------------
+  Stops mentions: 5
+  Validation mentions: 42
+  String instrument mentions: 1
+  RELEVANT CODE FOUND:
+
+PHASE 5: SEARCHING GIT HISTORY
+==========================================
+Git history for gml-quartet-v2:
+d22b8a8 feat: implement GML-Quartet V2.0 with BULLETPROOF-9x3 protocol
+
+Git history for gml-riffgen:
+0d5b608 fix: add fret position optimizer for playable TAB generation
+f1b1554 feat: Release GML-RiffGen V1.2.0 with BULLETPROOF-9x3 Protocol
+
+PHASE 6: FILE NAME SEARCH
+==========================================
+Files with relevant names:
+./backups/20250917_170346/quartet-engine-index.html
+./backups/20250917_170346/quintet-composer-index.html
+./BULLETPROOF_GUITAR_QUINTET_X100.html
+./BULLETPROOF_WORKING_QUINTET_X20.html
+./complete-dashboard.html
+./COMPLETE_QUINTET_GENERATOR.html
+./dashboard-working.html
+./dashboard.html
+./debug_batch_pipeline.html
+./drum-engine/drum-engine-enhanced.html
+./drum-engine/index-enhanced.html
+./enhanced-dashboard-fixed.html
+./enhanced-dashboard.html
+./FINAL_WORKING_TEST.html
+./fix7_simple_test.html
+./generative-chamber-composer/add_midi_export.html
+./generative-chamber-composer/gcc-enhanced.html
+./generative-chamber-composer/gcc_module1.html
+./generative-chamber-composer/index-enhanced.html
+./generative-hub/docs/index.html
+./gml-ace/backup-20250917/gml-ace.html
+./gml-ace/gml-ace-enhanced.html
+./gml-ace/gml-ace.html
+./gml-ace/gml_ace.html
+./gml-ace/index-enhanced.html
+./GML-Codex/gml-CompositionHub/CompositionHub.html
+./GML-Codex/gml-CompositionHub/quartet_engine_v21.html
+./GML-Codex/index.html
+./gml-composer-profiles-extension/index.html
+./gml-composer-profiles-extension/test_client.html
+./gml-composer-profiles-extension/web/player-backup.html
+./gml-composer-profiles-extension/web/player-fixed.html
+./gml-composer-profiles-extension/web/player-midi.html
+./gml-composer-profiles-extension/web/player.html
+./gml-composer-profiles-extension/web/simple-player.html
+./gml-enhancement-suite/app-with-sound.html
+./gml-enhancement-suite/dashboards/complete-dashboard.html
+./gml-enhancement-suite/enhanced-apps/drumengine-enhanced.html
+./gml-enhancement-suite/enhanced-apps/riffgen-enhanced.html
+./gml-enhancement-suite/enhanced-apps/triadgen-complete.html
+./gml-enhancement-suite/enhanced-apps/triadgen-enhanced.html
+./gml-enhancement-suite/my-first-app.html
+./gml-enhancement-suite/templates/auto_integrate.html
+./gml-enhancement-suite/test/recovery-test.html
+./gml-enhancement-suite/test.html
+./gml-enhancement-suite/triadgen-complete.html
+./gml-quartet/backup-20250917/quartet_engine_v21.html
+./gml-quartet/index-enhanced.html
+./gml-quartet/quartet-enhanced.html
+./gml-quartet/quartet_engine_v21-enhanced.html
+./gml-quartet/quartet_engine_v21.html
+./gml-quartet/quartet_engine_v21_broken.html
+./gml-quartet/quartet_engine_v21_working.html
+./gml-quartet/test_voiceleading.html
+./gml-quartet/test_voiceleading_with_sound.html
+./gml-quartet-v2/web/index.html
+./gml-quartet-v2/web/quartet-v2-bulletproof.html
+./gml-riffgen/backup-20250917/gml-riffgen.html
+./gml-riffgen/gml-riffgen-enhanced.html
+./gml-riffgen/gml-riffgen.html
+./gml-riffgen/index-enhanced.html
+./gml-riffgen/index-v1.0.0-backup.html
+./gml-riffgen/optimizer-integration.html
+./gml-riffgen/riffgen-enhanced.html
+./gml-riffgen/simple-batch.html
+./gml-riffgen/test-batch-integrated.html
+./gml-riffgen/test-memory-fixed.html
+./gml-riffgen/test-memory.html
+./gml-riffgen/ui-test.html
+./GML_MASTER_DASHBOARD.html
+./index.html
+./infinite-riff-machine/index-enhanced.html
+./infinite-riff-machine/riff-machine-enhanced.html
+./mike-gen-libs/quick-quintet.html
+./mike-gen-libs/test-quintet.html
+./quartet-engine/index.html
+./quartet-engine/quartet-engine-enhanced.html
+./quintet-composer/backup-20250917/index.html
+./quintet-composer/bulletproof_integrated.html
+./quintet-composer/index-enhanced.html
+./quintet-composer/index.html
+./quintet-composer/quintet-enhanced.html
+./quintet-composer/quintet_composer_v2.0_with_profiles.html
+./quintet-composer/quintet_composer_v3.0_harmonic.html
+./quintet-composer/quintet_composer_v7_final.html
+./quintet-composer/quintet_composer_v9_WORKING.html
+./quintet-composer-backup-20250919_191523/backup-20250917/index.html
+./quintet-composer-backup-20250919_191523/index-enhanced.html
+./quintet-composer-backup-20250919_191523/index.html
+./quintet-composer-backup-20250919_191523/quintet-enhanced.html
+./quintet_generator_WORKING.html
+./quintet_integrated.html
+./repair-tool.html
+./simple-dashboard.html
+./songsketch-pro/index-enhanced.html
+./test_batch_generation.html
+./test_enhanced_structure.html
+./test_progression_engine.html
+./test_structure.html
+./test_version_10.html
+./test_version_2.html
+./test_version_3.html
+./test_version_4.html
+./test_version_5.html
+./test_version_6.html
+./test_version_7.html
+./test_version_8.html
+./test_version_9.html
+./triadgen/backups/backup_triadgen.html_20250917_162540.html
+./triadgen/Documents/gml-workspace/complete-dashboard.html
+./triadgen/Documents/gml-workspace/dashboard-working.html
+./triadgen/Documents/gml-workspace/enhanced-dashboard-fixed.html
+./triadgen/Documents/gml-workspace/enhanced-dashboard.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/app-with-sound.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/dashboards/complete-dashboard.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/drumengine-enhanced.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/riffgen-enhanced.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-complete.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/enhanced-apps/triadgen-enhanced.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/my-first-app.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/test/recovery-test.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/test.html
+./triadgen/Documents/gml-workspace/gml-enhancement-suite/triadgen-complete.html
+./triadgen/Documents/gml-workspace/index.html
+./triadgen/Documents/gml-workspace/repair-tool.html
+./triadgen/Documents/gml-workspace/simple-dashboard.html
+./triadgen/Documents/gml-workspace/test-enhanced.html
+./triadgen/FINAL_BULLETPROOF_TRIADGEN.html
+./triadgen/FULL_TRIADGEN.html
+./triadgen/triadgen-enhanced-backup.html
+./triadgen/triadgen-enhanced.html
+./triadgen/triadgen.html
+./triadgen/triadgen_fixed.html
+./verify_100_percent.html
+
+==========================================
+SEARCH COMPLETE!
+==========================================
+
+Full results saved to: COMPLETE_STOPS_SEARCH_20250920_154254.txt

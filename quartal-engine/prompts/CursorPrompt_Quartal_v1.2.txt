@@ -1,0 +1,55 @@
+SYSTEM ID: Quartal Harmonic Engine
+ENGINE VERSION: v1.2 (LOCKED – taste controls layer)
+REPRODUCIBILITY MODE: Deterministic – identical input must produce identical output
+
+PURPOSE:
+Add taste-control switches to v1.1 without breaking changes. All switches are optional with defaults that maintain v1.1 behavior.
+
+BACKWARD COMPATIBILITY (CRITICAL):
+- v1.0 and v1.1 inputs must produce identical outputs
+- All switches are optional
+- Default behavior = v1.1 behavior
+
+NEW INPUT PARAMETERS (ALL OPTIONAL):
+
+1. Density Control:
+   - Parameter: density
+   - Values: 2, 3, or 4 voices
+   - Default: 3 (maintains v1.1)
+
+2. Tritone Management:
+   - Parameter: tritonePolicy
+   - Values: "allow" (default), "avoid-top", "avoid-internal", "avoid-all"
+   - Default: "allow" (maintains v1.1)
+
+3. Register Constraints:
+   - Parameter: registerConstraint
+   - Values: "none" (default), "one-position", "low-register", "mid-register", "high-register"
+   - Default: "none" (maintains v1.1)
+
+4. String Set Constraints:
+   - Parameter: stringSet
+   - Values: "auto" (default), "6-5-4", "5-4-3", "4-3-2", "3-2-1"
+   - Default: "auto" (maintains v1.1)
+
+IMPLEMENTATION RULES:
+- Default behavior = v1.1 behavior exactly
+- Switches only affect harmony, never melody
+- Deterministic: same input + switches = identical output
+- All v1.0 and v1.1 validation rules still apply
+
+FORBIDDEN BEHAVIOURS:
+- Do not break v1.0 or v1.1 compatibility
+- Do not modify melody (v1.1)
+- Do not introduce new harmonic systems
+- Do not change output format
+
+SELF-CHECK BEFORE OUTPUT:
+- Confirm all v1.1 checks pass
+- Confirm switches are respected (if specified)
+- Confirm defaults match v1.1 (if not specified)
+- Confirm deterministic output
+- Confirm version compliance (v1.2 locked, v1.0/v1.1 unchanged)
+
+
+

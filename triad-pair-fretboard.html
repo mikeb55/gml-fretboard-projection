@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GML · Triad Pair Fretboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .fretboard-container {
+            margin: 20px 0;
+            overflow-x: auto;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+
+        #fretboard {
+            min-width: 100%;
+        }
+
+        .fretboard-svg {
+            width: 100%;
+            height: auto;
+            background: #f5e6d3;
+            border-radius: 4px;
+        }
+
+        .string-line {
+            stroke: #333;
+            stroke-width: 2;
+        }
+
+        .fret-line {
+            stroke: #666;
+            stroke-width: 1.5;
+        }
+
+        .nut-line {
+            stroke: #000;
+            stroke-width: 3;
+        }
+
+        .fret-number {
+            font-size: 12px;
+            fill: #666;
+            font-weight: 600;
+        }
+
+        .fret-marker {
+            fill: #666;
+            opacity: 0.7;
+        }
+
+        .string-label {
+            font-size: 14px;
+            fill: #333;
+            font-weight: 600;
+        }
+
+        .note-marker {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .note-stable {
+            fill: #e74c3c;
+            stroke: #c0392b;
+            stroke-width: 2;
+        }
+
+        .note-tension {
+            fill: #3498db;
+            stroke: #2980b9;
+            stroke-width: 2;
+        }
+
+        .note-text {
+            font-size: 11px;
+            font-weight: 600;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+            fill: white;
+        }
+
+        .controls-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .control-group select,
+        .control-group input {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95em;
+            background: white;
+            color: #333;
+        }
+
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+
+        .triad-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .triad-label {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .stable-label {
+            color: #e74c3c;
+        }
+
+        .tension-label {
+            color: #3498db;
+        }
+
+        .color-legend {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 6px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid;
+        }
+
+        .legend-red {
+            background: #e74c3c;
+            border-color: #c0392b;
+        }
+
+        .legend-blue {
+            background: #3498db;
+            border-color: #2980b9;
+        }
+
+        .legend-text {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GML · Triad Pair Fretboard</h1>
+            <p class="subtitle">Visualize stable and tension triads on the guitar</p>
+        </header>
+
+        <div class="fretboard-container">
+            <div id="fretboard"></div>
+        </div>
+
+        <div class="color-legend">
+            <div class="legend-item">
+                <span class="legend-dot legend-red"></span>
+                <span class="legend-text">Stable triad</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot legend-blue"></span>
+                <span class="legend-text">Tension triad</span>
+            </div>
+        </div>
+
+        <div class="controls-panel">
+            <div class="control-group">
+                <div class="triad-label stable-label">Stable Triad</div>
+                <div class="triad-group">
+                    <div class="control-group">
+                        <label>Root</label>
+                        <select id="stableRoot"></select>
+                    </div>
+                    <div class="control-group">
+                        <label>Quality</label>
+                        <select id="stableQuality">
+                            <option value="major">Major</option>
+                            <option value="minor">Minor</option>
+                            <option value="dim">Diminished</option>
+                            <option value="aug">Augmented</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Inversion</label>
+                        <select id="stableInv">
+                            <option value="0">Root Position</option>
+                            <option value="1">1st Inversion</option>
+                            <option value="2">2nd Inversion</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="triad-label tension-label">Tension Triad</div>
+                <div class="triad-group">
+                    <div class="control-group">
+                        <label>Root</label>
+                        <select id="tensionRoot"></select>
+                    </div>
+                    <div class="control-group">
+                        <label>Quality</label>
+                        <select id="tensionQuality">
+                            <option value="major">Major</option>
+                            <option value="minor">Minor</option>
+                            <option value="dim">Diminished</option>
+                            <option value="aug">Augmented</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Inversion</label>
+                        <select id="tensionInv">
+                            <option value="0">Root Position</option>
+                            <option value="1">1st Inversion</option>
+                            <option value="2">2nd Inversion</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>String Set</label>
+                <select id="stringSet">
+                    <option value="6-4">6-4</option>
+                    <option value="5-3">5-3</option>
+                    <option value="4-2">4-2</option>
+                    <option value="all">All Strings</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Fret Range</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input id="minFret" type="number" value="0" min="0" max="17" style="width: 80px;">
+                    <span>to</span>
+                    <input id="maxFret" type="number" value="17" min="0" max="17" style="width: 80px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        const TRIADS = {
+            major: [0, 4, 7],
+            minor: [0, 3, 7],
+            dim: [0, 3, 6],
+            aug: [0, 4, 8]
+        };
+        const STRINGS = [4, 9, 2, 7, 11, 4]; // EADGBE (pitch classes)
+        const TUNING = [40, 45, 50, 55, 59, 64]; // MIDI notes
+
+        const UIController = {
+            stringSpacing: 40,
+            fretWidth: 50,
+            nutWidth: 8,
+            startFret: 0,
+            endFret: 17,
+            numStrings: 6,
+
+            init() {
+                // Populate root selects
+                NOTES.forEach((n, i) => {
+                    const stableOpt = document.createElement('option');
+                    stableOpt.value = i;
+                    stableOpt.textContent = n;
+                    document.getElementById('stableRoot').appendChild(stableOpt);
+
+                    const tensionOpt = document.createElement('option');
+                    tensionOpt.value = i;
+                    tensionOpt.textContent = n;
+                    document.getElementById('tensionRoot').appendChild(tensionOpt);
+                });
+
+                // Set default values
+                document.getElementById('stableRoot').value = 0; // C
+                document.getElementById('tensionRoot').value = 2; // D
+                document.getElementById('stableQuality').value = 'major';
+                document.getElementById('tensionQuality').value = 'minor';
+
+                // Event listeners
+                document.querySelectorAll('select, input').forEach(el => {
+                    el.addEventListener('change', () => this.updateDisplay());
+                });
+
+                this.renderFretboard();
+                this.updateDisplay();
+            },
+
+            buildTriad(root, quality, inversion) {
+                const pcs = TRIADS[quality].map(i => (root + i) % 12);
+                for (let i = 0; i < inversion; i++) pcs.push(pcs.shift());
+                return pcs;
+            },
+
+            getMidiNote(stringIndex, fret) {
+                return TUNING[stringIndex] + fret;
+            },
+
+            getPitchClass(midiNote) {
+                return midiNote % 12;
+            },
+
+            getNoteName(midiNote) {
+                return NOTES[this.getPitchClass(midiNote)];
+            },
+
+            allowedString(i, stringSet) {
+                if (stringSet === "all") return true;
+                if (stringSet === "6-4") return i <= 2;
+                if (stringSet === "5-3") return i >= 1 && i <= 3;
+                if (stringSet === "4-2") return i >= 2 && i <= 4;
+                return false;
+            },
+
+            renderFretboard() {
+                const container = document.getElementById('fretboard');
+                const width = (this.endFret - this.startFret) * this.fretWidth + this.nutWidth;
+                const fretboardHeight = (this.numStrings - 1) * this.stringSpacing + 60;
+                const markerAreaHeight = 40;
+                const height = fretboardHeight + markerAreaHeight;
+
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('class', 'fretboard-svg');
+                svg.setAttribute('width', width);
+                svg.setAttribute('height', height);
+                svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+                // Draw nut
+                const nut = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                nut.setAttribute('class', 'nut-line');
+                nut.setAttribute('x1', this.nutWidth / 2);
+                nut.setAttribute('y1', 30);
+                nut.setAttribute('x2', this.nutWidth / 2);
+                nut.setAttribute('y2', fretboardHeight - 30);
+                svg.appendChild(nut);
+
+                // Draw frets
+                for (let fret = this.startFret; fret <= this.endFret; fret++) {
+                    const x = this.nutWidth + (fret - this.startFret) * this.fretWidth;
+
+                    const fretLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    fretLine.setAttribute('class', 'fret-line');
+                    fretLine.setAttribute('x1', x);
+                    fretLine.setAttribute('y1', 30);
+                    fretLine.setAttribute('x2', x);
+                    fretLine.setAttribute('y2', fretboardHeight - 30);
+                    svg.appendChild(fretLine);
+
+                    // Fret number
+                    if (fret > 0 && fret <= 17) {
+                        const fretNum = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        fretNum.setAttribute('class', 'fret-number');
+                        fretNum.setAttribute('x', x - this.fretWidth / 2);
+                        fretNum.setAttribute('y', 20);
+                        fretNum.setAttribute('text-anchor', 'middle');
+                        fretNum.textContent = fret;
+                        svg.appendChild(fretNum);
+                    }
+                }
+
+                // Draw strings
+                const stringNames = ['E', 'A', 'D', 'G', 'B', 'E'];
+                for (let i = 0; i < this.numStrings; i++) {
+                    const y = 30 + i * this.stringSpacing;
+
+                    const stringLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    stringLine.setAttribute('class', 'string-line');
+                    stringLine.setAttribute('x1', 0);
+                    stringLine.setAttribute('y1', y);
+                    stringLine.setAttribute('x2', width);
+                    stringLine.setAttribute('y2', y);
+                    svg.appendChild(stringLine);
+
+                    const stringLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    stringLabel.setAttribute('class', 'string-label');
+                    stringLabel.setAttribute('x', 10);
+                    stringLabel.setAttribute('y', y + 5);
+                    stringLabel.textContent = `${this.numStrings - i} (${stringNames[i]})`;
+                    svg.appendChild(stringLabel);
+                }
+
+                // Draw fret markers (3, 5, 7, 9, 12, 15)
+                const markerPositions = [3, 5, 7, 9, 12, 15];
+                for (const markerFret of markerPositions) {
+                    if (markerFret >= this.startFret && markerFret <= this.endFret) {
+                        const markerX = this.nutWidth + (markerFret - this.startFret) * this.fretWidth - this.fretWidth / 2;
+                        const markerY = fretboardHeight + 20;
+                        const marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        marker.setAttribute('class', 'fret-marker');
+                        marker.setAttribute('cx', markerX);
+                        marker.setAttribute('cy', markerY);
+                        marker.setAttribute('r', 5);
+                        marker.setAttribute('fill', '#666');
+                        svg.appendChild(marker);
+                    }
+                }
+
+                // Create notes group
+                const notesGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                notesGroup.setAttribute('id', 'notes-group');
+                svg.appendChild(notesGroup);
+
+                container.innerHTML = '';
+                container.appendChild(svg);
+            },
+
+            updateDisplay() {
+                const notesGroup = document.getElementById('notes-group');
+                if (!notesGroup) return;
+
+                notesGroup.innerHTML = '';
+
+                const stable = this.buildTriad(
+                    parseInt(document.getElementById('stableRoot').value),
+                    document.getElementById('stableQuality').value,
+                    parseInt(document.getElementById('stableInv').value)
+                );
+
+                const tension = this.buildTriad(
+                    parseInt(document.getElementById('tensionRoot').value),
+                    document.getElementById('tensionQuality').value,
+                    parseInt(document.getElementById('tensionInv').value)
+                );
+
+                const stringSet = document.getElementById('stringSet').value;
+                const minF = parseInt(document.getElementById('minFret').value);
+                const maxF = parseInt(document.getElementById('maxFret').value);
+
+                // Update endFret if needed
+                if (maxF > this.endFret) {
+                    this.endFret = maxF;
+                    this.renderFretboard();
+                    return; // Will be called again after render
+                }
+
+                // Find and draw notes
+                for (let s = 0; s < this.numStrings; s++) {
+                    if (!this.allowedString(s, stringSet)) continue;
+
+                    for (let f = minF; f <= maxF && f <= this.endFret; f++) {
+                        const midiNote = this.getMidiNote(s, f);
+                        const pc = this.getPitchClass(midiNote);
+
+                        const isStable = stable.includes(pc);
+                        const isTension = tension.includes(pc);
+
+                        if (isStable || isTension) {
+                            const x = this.nutWidth + (f - this.startFret) * this.fretWidth - this.fretWidth / 2;
+                            const y = 30 + s * this.stringSpacing;
+
+                            // Draw note circle
+                            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                            circle.setAttribute('class', 'note-marker');
+                            if (isStable) {
+                                circle.setAttribute('class', 'note-marker note-stable');
+                            } else {
+                                circle.setAttribute('class', 'note-marker note-tension');
+                            }
+                            circle.setAttribute('cx', x);
+                            circle.setAttribute('cy', y);
+                            circle.setAttribute('r', 12);
+                            notesGroup.appendChild(circle);
+
+                            // Draw note name
+                            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                            text.setAttribute('class', 'note-text');
+                            text.setAttribute('x', x);
+                            text.setAttribute('y', y);
+                            text.textContent = this.getNoteName(midiNote);
+                            notesGroup.appendChild(text);
+                        }
+                    }
+                }
+            }
+        };
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => UIController.init());
+        } else {
+            UIController.init();
+        }
+    </script>
+</body>
+</html>

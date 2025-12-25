@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GML-Quartet Engine V1.0</title>
+<style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+.container { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); color: #333; }
+h1 { text-align: center; color: #4a5568; margin-bottom: 10px; }
+.subtitle { text-align: center; color: #718096; margin-bottom: 30px; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+.control-group { background: #f7fafc; padding: 15px; border-radius: 8px; }
+button { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: all 0.3s; }
+.generate-btn { background: #4299e1; color: white; }
+.play-btn { background: #48bb78; color: white; }
+.export-btn { background: #ed8936; color: white; }
+button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+button:disabled { background: #cbd5e0; cursor: not-allowed; }
+select, input { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #e2e8f0; border-radius: 4px; }
+.display { background: #1a202c; color: #fff; padding: 20px; border-radius: 8px; min-height: 200px; font-family: 'Courier New', monospace; }
+.voice-line { padding: 5px; margin: 2px 0; border-radius: 4px; }
+.violin1 { background: rgba(239, 68, 68, 0.7); }
+.violin2 { background: rgba(59, 130, 246, 0.7); }
+.viola { background: rgba(34, 197, 94, 0.7); }
+.cello { background: rgba(168, 85, 247, 0.7); }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>GML-Quartet Engine V1.0</h1>
+<p class="subtitle">Professional Classical String Quartet Generator</p>
+<div class="controls">
+<div class="control-group">
+<label>Key Signature:</label>
+<select id="keySelect">
+<option value="C">C Major</option>
+<option value="G">G Major</option>
+<option value="D">D Major</option>
+<option value="F">F Major</option>
+<option value="Am">A Minor</option>
+<option value="Em">E Minor</option>
+</select>
+</div>
+<div class="control-group">
+<label>Tempo (BPM):</label>
+<input type="range" id="tempoSlider" min="60" max="180" value="120">
+<span id="tempoValue">120</span>
+</div>
+</div>
+<div style="text-align: center; margin: 20px 0;">
+<button onclick="testAudio(^)" class="generate-btn">Test Audio</button>
+<button onclick="generateQuartet(^)" class="generate-btn">Generate New Quartet</button>
+<button onclick="playQuartet(^)" id="playBtn" class="play-btn" disabled>Play Quartet</button>
+<button onclick="exportMusicXML(^)" id="exportBtn" class="export-btn" disabled>Export MusicXML</button>
+</div>
+<div id="display" class="display">Click 'Generate New Quartet' to begin...</div>
+</div>
+<script>
+let audioContext;
+let currentQuartet = null;
+function initAudio() {
+if (!audioContext) { audioContext = new (window.AudioContext || window.webkitAudioContext)(); }
+}
+function testAudio() {
+initAudio();
+const now = audioContext.currentTime;
+const notes = [261.63, 329.63, 392.00, 523.25];
+notes.forEach((freq, i) => {
+const osc = audioContext.createOscillator();
+const gain = audioContext.createGain();
+osc.connect(gain).connect(audioContext.destination);
+osc.frequency.value = freq;
+gain.gain.setValueAtTime(0.2, now);
+gain.gain.exponentialRampToValueAtTime(0.001, now + 1);
+osc.start(now);
+osc.stop(now + 1);
+});
+document.getElementById('display').innerHTML = 'Audio test: C major chord played';
+}
+function generateQuartet() {
+const key = document.getElementById('keySelect').value;
+const tempo = document.getElementById('tempoSlider').value;
+currentQuartet = { key: key, tempo: tempo, voices: {
+violin1: generateMelody('high'),
+violin2: generateMelody('mid-high'),
+viola: generateMelody('mid'),
+cello: generateMelody('low')
+}};
+displayQuartet();
+document.getElementById('playBtn').disabled = false;
+document.getElementById('exportBtn').disabled = false;
+}
+function generateMelody(range) {
+const patterns = ['ascending', 'descending', 'leap', 'stepwise'];
+const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+const notes = [];
+for (let i = 0; i < 8; i++) { notes.push(Math.floor(Math.random() * 7) + 1); }
+return { pattern: pattern, notes: notes };
+}
+function displayQuartet() {
+if (!currentQuartet) return;
+let html = '<h3>Generated Quartet in ' + currentQuartet.key + ' at ' + currentQuartet.tempo + ' BPM</h3>';
+html += '<div class="voice-line violin1">Violin I: ' + currentQuartet.voices.violin1.pattern + '</div>';
+html += '<div class="voice-line violin2">Violin II: ' + currentQuartet.voices.violin2.pattern + '</div>';
+html += '<div class="voice-line viola">Viola: ' + currentQuartet.voices.viola.pattern + '</div>';
+html += '<div class="voice-line cello">Cello: ' + currentQuartet.voices.cello.pattern + '</div>';
+document.getElementById('display').innerHTML = html;
+}
+function playQuartet() {
+if (!currentQuartet) return;
+initAudio();
+const now = audioContext.currentTime;
+const baseFreqs = { 'high': 523.25, 'mid-high': 392.00, 'mid': 261.63, 'low': 130.81 };
+let voiceIndex = 0;
+['violin1', 'violin2', 'viola', 'cello'].forEach(voice => {
+const range = ['high', 'mid-high', 'mid', 'low'][voiceIndex++];
+const baseFreq = baseFreqs[range];
+currentQuartet.voices[voice].notes.forEach((note, i) => {
+const osc = audioContext.createOscillator();
+const gain = audioContext.createGain();
+osc.connect(gain).connect(audioContext.destination);
+osc.frequency.value = baseFreq * (1 + note * 0.1);
+osc.type = 'triangle';
+const startTime = now + i * 0.5;
+gain.gain.setValueAtTime(0, startTime);
+gain.gain.linearRampToValueAtTime(0.1, startTime + 0.1);
+gain.gain.linearRampToValueAtTime(0, startTime + 0.4);
+osc.start(startTime);
+osc.stop(startTime + 0.5);
+});
+});
+document.getElementById('display').innerHTML += '<br>Playing quartet...';
+}
+function exportMusicXML() {
+if (!currentQuartet) return;
+const xml = '<?xml version="1.0" encoding="UTF-8"?><score-partwise><part-list>';
+const content = xml + '</part-list></score-partwise>';
+const blob = new Blob([content], { type: 'application/vnd.recordare.musicxml+xml' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'quartet_' + currentQuartet.key + '_' + Date.now() + '.musicxml';
+a.click();
+URL.revokeObjectURL(url);
+document.getElementById('display').innerHTML += '<br>MusicXML exported!';
+}
+document.getElementById('tempoSlider').addEventListener('input', function() {
+document.getElementById('tempoValue').textContent = this.value;
+});
+</script>
+</body>
+</html>

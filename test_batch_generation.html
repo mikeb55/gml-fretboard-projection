@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Batch Generation Pipeline</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #1a1a2e; color: white; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; margin: 5px; border: none; border-radius: 5px; cursor: pointer; }
+        .progress { background: rgba(0,255,0,0.2); padding: 10px; border-radius: 5px; margin: 10px 0; }
+        #output { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; font-family: monospace; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Rapid Quintet Generation - Batch Pipeline</h1>
+    
+    <div>
+        <select id="style">
+            <option value="CLASSICAL_STANDARD">Classical</option>
+            <option value="ROMANTIC">Romantic</option>
+            <option value="MODERN">Modern</option>
+        </select>
+        
+        <input type="number" id="duration" value="5" min="1" max="10"> minutes
+        
+        <button onclick="generateBatch()">Generate 10 Variations</button>
+        <button onclick="quickGenerate()">Quick Generate (Best Only)</button>
+        <button onclick="exportXML()">Export MusicXML</button>
+    </div>
+    
+    <div class="progress" id="progress"></div>
+    <div id="output"></div>
+    
+    <script src="enhanced_structure_generator.js"></script>
+    <script src="progression_engine.js"></script>
+    <script src="extended_voiceleading.js"></script>
+    <script src="batch_generation_pipeline.js"></script>
+    <script>
+        const pipeline = new BatchGenerationPipeline();
+        let currentComposition = null;
+        
+        async function generateBatch() {
+            const style = document.getElementById('style').value;
+            const duration = parseInt(document.getElementById('duration').value);
+            
+            document.getElementById('progress').textContent = 'Generating...';
+            
+            await pipeline.initialize();
+            const batch = pipeline.generateBatch(style, duration);
+            currentComposition = pipeline.assembleComposition(batch);
+            
+            let output = 'BATCH GENERATION COMPLETE\n';
+            output += '='.repeat(50) + '\n\n';
+            output += 'Generated: ' + batch.variations.length + ' variations\n';
+            output += 'Best score: ' + batch.selected.score + '\n\n';
+            
+            output += 'SELECTED COMPOSITION:\n';
+            output += 'Title: ' + currentComposition.title + '\n';
+            output += 'Duration: ' + currentComposition.duration + '\n';
+            output += 'Movements: ' + currentComposition.movements.length + '\n\n';
+            
+            currentComposition.movements.forEach((m, i) => {
+                output += (i+1) + '. ' + m.name + ' (' + m.bars + ' bars)\n';
+            });
+            
+            document.getElementById('output').textContent = output;
+            document.getElementById('progress').textContent = 'Complete!';
+        }
+        
+        async function quickGenerate() {
+            const style = document.getElementById('style').value;
+            const duration = parseInt(document.getElementById('duration').value);
+            
+            document.getElementById('progress').textContent = 'Quick generating...';
+            currentComposition = await pipeline.generateComplete(style, duration);
+            
+            document.getElementById('output').textContent = 
+                'Quick generation complete!\nScore: ' + currentComposition.metadata.score;
+            document.getElementById('progress').textContent = 'Done in < 15 seconds!';
+        }
+        
+        function exportXML() {
+            if (!currentComposition) {
+                alert('Generate a composition first!');
+                return;
+            }
+            
+            const xml = pipeline.exportToMusicXML(currentComposition);
+            const blob = new Blob([xml], { type: 'application/vnd.recordare.musicxml+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'quintet_' + Date.now() + '.musicxml';
+            a.click();
+        }
+    </script>
+</body>
+</html>
