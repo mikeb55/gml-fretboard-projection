@@ -122,7 +122,7 @@ Each projection result provides:
 
 ### Constraints
 - Maximum fret span: 5 frets (playable with one hand position)
-- Maximum fret: 20 (reasonable upper limit)
+- Maximum fret: 12 (cap at 12th fret)
 - Standard tuning: EADGBE (MIDI 40, 45, 50, 55, 59, 64)
 
 ## Usage

@@ -10,7 +10,7 @@
  */
 
 const GUITAR_TUNING = [40, 45, 50, 55, 59, 64];
-const MAX_FRET = 20;
+const MAX_FRET = 12; // Cap at 12th fret
 const MAX_FRET_SPAN = 5;
 
 export class FretboardProjection {

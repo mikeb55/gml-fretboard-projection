@@ -59,3 +59,6 @@ ui.loadBars(projectionOutputs);
 
 console.log('Integration complete. Projection outputs:', projectionOutputs);
 
+
+
+
