@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fretboard UI v0.1 - Labyrinth Visualiser</title>
+  <link rel="stylesheet" href="../src/fretboard-ui-styles.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .demo-container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .demo-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    
+    .demo-title h1 {
+      margin: 0 0 10px 0;
+      font-size: 28px;
+    }
+    
+    .demo-title p {
+      margin: 0;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .overlay-controls {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: #fafafa;
+      border-radius: 8px;
+    }
+    
+    .overlay-controls label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    .overlay-controls input[type="checkbox"] {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <div class="demo-title">
+      <h1>Fretboard UI v0.1</h1>
+      <p>Labyrinth-style Visualiser — Shows projection layer output</p>
+    </div>
+    
+    <div id="fretboard-container" class="fretboard-container"></div>
+    
+    <div class="overlay-controls">
+      <label>
+        <input type="checkbox" id="show-bar-number">
+        Show Bar Number
+      </label>
+      <label>
+        <input type="checkbox" id="show-movement-type">
+        Show Movement Type
+      </label>
+      <label>
+        <input type="checkbox" id="show-reason-codes">
+        Show Reason Codes
+      </label>
+    </div>
+  </div>
+
+  <script type="module">
+    import { FretboardUI } from '../src/fretboard-ui-v0.1.js';
+    
+    // Sample data from projection layer (simulated)
+    const sampleBars = [
+      {
+        stringSet: [6, 5, 4, 3],
+        frets: [3, 2, 5, 4, null, null],
+        positionWindow: [2, 7],
+        anchorFret: 2,
+        movementType: 'RESET',
+        shapeId: 'root',
+        registerBand: 'mid',
+        reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
+      },
+      {
+        stringSet: [6, 5, 4, 3],
+        frets: [5, 3, 5, 5, null, null],
+        positionWindow: [3, 8],
+        anchorFret: 3,
+        movementType: 'STEP',
+        shapeId: 'root',
+        registerBand: 'mid',
+        reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
+      },
+      {
+        stringSet: [6, 5, 4, 3],
+        frets: [3, 2, 5, 4, null, null],
+        positionWindow: [2, 7],
+        anchorFret: 2,
+        movementType: 'STEP',
+        shapeId: 'root',
+        registerBand: 'mid',
+        reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
+      },
+      {
+        stringSet: [6, 5, 4, 3],
+        frets: [3, 2, 5, 4, null, null],
+        positionWindow: [2, 7],
+        anchorFret: 2,
+        movementType: 'HOLD',
+        shapeId: 'root',
+        registerBand: 'mid',
+        reasonCodes: [{ code: 'HOLD_VALID', message: 'Hold valid' }]
+      },
+      {
+        stringSet: [6, 5, 4, 3],
+        frets: [3, 2, 5, 4, null, null],
+        positionWindow: [2, 7],
+        anchorFret: 2,
+        movementType: 'HOLD',
+        shapeId: 'root',
+        registerBand: 'mid',
+        reasonCodes: [{ code: 'HOLD_VALID', message: 'Hold valid' }]
+      },
+      {
+        stringSet: [5, 4, 3, 2],
+        frets: [null, 5, 7, 6, 7, null],
+        positionWindow: [5, 10],
+        anchorFret: 5,
+        movementType: 'RESET',
+        shapeId: 'root',
+        registerBand: 'mid',
+        reasonCodes: [{ code: 'REGISTER_RESET', message: 'Register reset' }]
+      }
+    ];
+    
+    const container = document.getElementById('fretboard-container');
+    const ui = new FretboardUI(container, {
+      showBarNumber: false,
+      showMovementType: false,
+      showReasonCodes: false
+    });
+    
+    ui.loadBars(sampleBars);
+    
+    // Overlay toggles
+    document.getElementById('show-bar-number').addEventListener('change', (e) => {
+      ui.updateOptions({ showBarNumber: e.target.checked });
+    });
+    
+    document.getElementById('show-movement-type').addEventListener('change', (e) => {
+      ui.updateOptions({ showMovementType: e.target.checked });
+    });
+    
+    document.getElementById('show-reason-codes').addEventListener('change', (e) => {
+      ui.updateOptions({ showReasonCodes: e.target.checked });
+    });
+  </script>
+</body>
+</html>
+
