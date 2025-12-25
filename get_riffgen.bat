@@ -1,6 +1,0 @@
-@echo off
-echo Downloading RiffGen from GitHub...
-curl -s https://raw.githubusercontent.com/mikeb55/gml-riffgen/main/index.html > riffgen_from_github.html
-echo Downloaded to riffgen_from_github.html
-echo Opening file...
-notepad riffgen_from_github.html
