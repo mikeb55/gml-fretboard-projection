@@ -94,12 +94,30 @@ export class FretboardUI {
 
   /**
    * Load bars (projection outputs)
+   * CRITICAL: This function must NEVER limit bars to 4 - it accepts any number of bars
    */
   loadBars(bars) {
+    if (!bars || !Array.isArray(bars)) {
+      console.error('ERROR: loadBars called with invalid input:', bars);
+      this.bars = [];
+      return;
+    }
+    
+    // CRITICAL VERIFICATION: Log if we're getting exactly 4 bars (may indicate a bug upstream)
+    if (bars.length === 4) {
+      console.warn('⚠️ WARNING: loadBars received exactly 4 bars. This may indicate a bug if more bars were expected.');
+    }
+    
+    // NO LIMITS - Store all bars as provided
     this.bars = bars;
     this.currentBar = 0;
+    
+    console.log(`✓ FretboardUI.loadBars: Loaded ${this.bars.length} bars (NO LIMIT APPLIED)`);
+    
     if (bars.length > 0) {
       this.renderBar(0);
+    } else {
+      console.warn('⚠️ WARNING: loadBars called with empty array');
     }
   }
 

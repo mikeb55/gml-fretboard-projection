@@ -96,10 +96,10 @@
     </div>
     
     <div class="input-section">
-      <label for="chord-input">Chord Progression (16-bar example pre-loaded):</label>
+      <label for="chord-input">Chord Progression (paste your progression here - supports any number of bars):</label>
       <textarea id="chord-input">Bb7 | % | Eb7 | F7 | Bb7 | % | Eb7 | Bb7 | Gm7 | Cm7 | F7 | Bb7 | Eb7 | Edim7 | Bb7/G7 | Cm7/F7</textarea>
-      <button id="parse-btn" style="margin-top: 10px; padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Load Custom Progression</button>
-      <button id="load-demo-btn" style="margin-top: 10px; margin-left: 10px; padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Load 4-Bar Demo</button>
+      <button id="parse-btn" style="margin-top: 10px; padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Load Progression</button>
+      <div id="bar-count-warning" style="margin-top: 10px; padding: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; display: none; color: #856404;"></div>
     </div>
     
     <div id="fretboard-container" class="fretboard-container"></div>
@@ -128,37 +128,7 @@
     // Use actual projection layer to generate sample data with midiNotes
     const projection = new FretboardProjection();
     
-    // 4-bar demo (only loaded when user clicks "Load 4-Bar Demo" button)
-    const demoEngineOutputs = [
-      {
-        voicing: [48, 52, 55, 59], // Cmaj7: C-E-G-B
-        inversion: 'root',
-        registerPosition: 'mid',
-        hold: false,
-        reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
-      },
-      {
-        voicing: [50, 53, 57, 60], // Dm7: D-F-A-C
-        inversion: 'root',
-        registerPosition: 'mid',
-        hold: false,
-        reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
-      },
-      {
-        voicing: [55, 59, 62, 65], // G7: G-B-D-F (corrected from [55, 59, 62, 67])
-        inversion: 'root',
-        registerPosition: 'mid',
-        hold: false,
-        reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
-      },
-      {
-        voicing: [57, 60, 64, 67], // Am7: A-C-E-G
-        inversion: 'root',
-        registerPosition: 'mid',
-        hold: false,
-        reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
-      }
-    ];
+    // NO 4-BAR DEMO - Removed to prevent any confusion or accidental loading
     
     const container = document.getElementById('fretboard-container');
     const ui = new FretboardUI(container, {
@@ -167,38 +137,81 @@
       showReasonCodes: false
     });
     
-    // Function to load bars from engine outputs
+    // Function to load bars from engine outputs with explicit verification
     function loadBarsFromEngineOutputs(engineOutputs) {
+      if (!engineOutputs || engineOutputs.length === 0) {
+        console.error('ERROR: No engine outputs provided to loadBarsFromEngineOutputs');
+        alert('Error: No chords to load');
+        return;
+      }
+      
       const projectionOutputs = engineOutputs.map(output => projection.project(output));
+      
+      // CRITICAL VERIFICATION: Check if we accidentally got 4 bars
+      if (projectionOutputs.length === 4) {
+        const warningEl = document.getElementById('bar-count-warning');
+        warningEl.textContent = `⚠️ WARNING: Only 4 bars detected! This may indicate a problem. Expected more bars from the progression.`;
+        warningEl.style.display = 'block';
+        console.error('⚠️ WARNING: Only 4 bars loaded - this may indicate a bug!');
+      } else {
+        const warningEl = document.getElementById('bar-count-warning');
+        warningEl.style.display = 'none';
+      }
+      
       ui.loadBars(projectionOutputs);
+      
+      // Verify the UI actually has the correct number of bars
+      setTimeout(() => {
+        if (ui.bars.length !== projectionOutputs.length) {
+          console.error(`CRITICAL BUG: UI bars.length (${ui.bars.length}) != projectionOutputs.length (${projectionOutputs.length})`);
+          alert(`CRITICAL BUG DETECTED: UI has ${ui.bars.length} bars but should have ${projectionOutputs.length} bars!`);
+        } else {
+          console.log(`✓ VERIFIED: UI loaded with ${ui.bars.length} bars (matches projection outputs)`);
+        }
+      }, 100);
+      
       console.log(`UI loaded with ${projectionOutputs.length} bars`);
     }
     
     // Parse button handler
     const parseBtn = document.getElementById('parse-btn');
     const chordInput = document.getElementById('chord-input');
-    const loadDemoBtn = document.getElementById('load-demo-btn');
     
-    // Function to parse and load progression
+    // Function to parse and load progression - CRITICAL: Must always load ALL bars, never limit to 4
     function parseAndLoadProgression() {
       const text = chordInput.value.trim();
-      console.log('Parsing text:', text);
+      console.log('=== PARSING PROGRESSION ===');
+      console.log('Input text:', text);
+      
       if (!text) {
-        console.warn('No chord progression entered');
+        console.warn('No chord progression entered - using default');
+        // Use the pre-loaded textarea value as fallback
+        const defaultText = chordInput.getAttribute('value') || chordInput.defaultValue || '';
+        if (defaultText) {
+          chordInput.value = defaultText;
+          return parseAndLoadProgression(); // Retry with default
+        }
+        console.error('CRITICAL: No text available and no default found');
         return;
       }
       
       try {
-        // Parse chord progression
+        // Parse chord progression - this should return ALL chords, no limits
         const parsedChords = parseChordProgression(text);
-        console.log(`Parsed ${parsedChords.length} chords:`, parsedChords.map(c => c.symbol));
+        console.log(`✓ Parsed ${parsedChords.length} chords:`, parsedChords.map(c => c.symbol));
         
         if (parsedChords.length === 0) {
-          console.warn('No valid chords found in the input');
+          console.error('CRITICAL ERROR: Parser returned 0 chords from:', text);
+          alert('Error: Could not parse any chords from the input. Please check the format.');
           return;
         }
         
-        // Generate projection outputs
+        // CRITICAL CHECK: If we only got 4 chords, warn the user
+        if (parsedChords.length === 4) {
+          console.warn('⚠️ WARNING: Parser returned exactly 4 chords. This may be correct, but verify the input contains all bars.');
+        }
+        
+        // Generate projection outputs - map ALL chords, no slicing
         const engineOutputs = parsedChords.map((chord, index) => ({
           voicing: chord.voicing,
           inversion: 'root',
@@ -207,12 +220,23 @@
           reasonCodes: [{ code: 'PARSED_CHORD', message: `Parsed from: ${chord.symbol}` }]
         }));
         
+        console.log(`✓ Generated ${engineOutputs.length} engine outputs (should match ${parsedChords.length} parsed chords)`);
+        
+        // CRITICAL: Verify we're passing ALL bars, not just 4
+        if (engineOutputs.length !== parsedChords.length) {
+          console.error(`CRITICAL BUG: engineOutputs.length (${engineOutputs.length}) != parsedChords.length (${parsedChords.length})`);
+          alert(`CRITICAL BUG: Lost ${parsedChords.length - engineOutputs.length} bars during conversion!`);
+        }
+        
+        // Load ALL bars - no limits
         loadBarsFromEngineOutputs(engineOutputs);
         
-        console.log(`Successfully loaded ${parsedChords.length} bars`);
+        console.log(`✓ SUCCESS: Loaded ${parsedChords.length} bars into UI`);
+        console.log('=== PARSING COMPLETE ===');
       } catch (error) {
-        console.error(`Error parsing chords: ${error.message}`, error);
-        alert(`Error parsing chords: ${error.message}`);
+        console.error(`CRITICAL ERROR parsing chords:`, error);
+        console.error('Error stack:', error.stack);
+        alert(`Error parsing chords: ${error.message}\n\nCheck console for details.`);
       }
     }
     
@@ -230,12 +254,7 @@
       parseAndLoadProgression();
     }
     
-    // Load demo button handler
-    loadDemoBtn.addEventListener('click', () => {
-      chordInput.value = '';
-      loadBarsFromEngineOutputs(demoEngineOutputs);
-      console.log('Loaded 4-bar demo');
-    });
+    // NO DEMO BUTTON - Removed to prevent any 4-bar limit
     
     // Overlay toggles
     document.getElementById('show-bar-number').addEventListener('change', (e) => {
