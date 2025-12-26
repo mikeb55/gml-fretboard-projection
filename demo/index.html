@@ -162,7 +162,7 @@
     
     const container = document.getElementById('fretboard-container');
     const ui = new FretboardUI(container, {
-      showBarNumber: false,
+      showBarNumber: true,  // Show bar number by default
       showMovementType: false,
       showReasonCodes: false
     });
@@ -171,6 +171,7 @@
     function loadBarsFromEngineOutputs(engineOutputs) {
       const projectionOutputs = engineOutputs.map(output => projection.project(output));
       ui.loadBars(projectionOutputs);
+      console.log(`UI loaded with ${projectionOutputs.length} bars`);
     }
     
     // Parse button handler
@@ -181,17 +182,19 @@
     // Function to parse and load progression
     function parseAndLoadProgression() {
       const text = chordInput.value.trim();
+      console.log('Parsing text:', text);
       if (!text) {
-        alert('Please enter a chord progression');
+        console.warn('No chord progression entered');
         return;
       }
       
       try {
         // Parse chord progression
         const parsedChords = parseChordProgression(text);
+        console.log(`Parsed ${parsedChords.length} chords:`, parsedChords.map(c => c.symbol));
         
         if (parsedChords.length === 0) {
-          alert('No valid chords found in the input');
+          console.warn('No valid chords found in the input');
           return;
         }
         
@@ -206,17 +209,20 @@
         
         loadBarsFromEngineOutputs(engineOutputs);
         
-        console.log(`Loaded ${parsedChords.length} bars`);
+        console.log(`Successfully loaded ${parsedChords.length} bars`);
       } catch (error) {
+        console.error(`Error parsing chords: ${error.message}`, error);
         alert(`Error parsing chords: ${error.message}`);
-        console.error(error);
       }
     }
     
     parseBtn.addEventListener('click', parseAndLoadProgression);
     
-    // Auto-load the 16-bar example on page load
-    parseAndLoadProgression();
+    // Auto-load the 16-bar example on page load (use setTimeout to ensure DOM is ready)
+    setTimeout(() => {
+      console.log('Auto-loading progression...');
+      parseAndLoadProgression();
+    }, 100);
     
     // Load demo button handler
     loadDemoBtn.addEventListener('click', () => {
