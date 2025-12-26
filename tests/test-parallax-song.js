@@ -8,7 +8,8 @@ import { FretboardProjection } from '../src/fretboard-projection-v0.1.3.js';
 // Full "Parallax" chord progression from the image
 // Section A: Bb7 | % | Eb7 | F7 | Bb7 | % | Eb7 | Bb7
 // Section B: Gm7 | Cm7 | F7 | Bb7 | Eb7 | Edim7 | Bb7/G7 | Cm7/F7
-// Note: For slash chords (Bb7/G7, Cm7/F7), we extract only the second chord (G7, F7)
+// Note: iReal Pro uses "/" to show two chords in one measure
+// We extract only the second chord (Bb7/G7 → G7, Cm7/F7 → F7)
 const parallaxProgression = `
 Bb7 | % | Eb7 | F7 | Bb7 | % | Eb7 | Bb7 |
 Gm7 | Cm7 | F7 | Bb7 | Eb7 | Edim7 | Bb7/G7 | Cm7/F7

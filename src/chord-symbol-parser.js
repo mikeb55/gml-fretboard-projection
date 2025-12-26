@@ -153,13 +153,14 @@ export function parseChordProgression(text, octave = 4) {
   
   return chords.map(symbol => {
     try {
-      // Handle slash chords (e.g., "Bb7/G7" or "Cm7/F7")
-      // Extract only the second chord (after the slash)
+      // Handle iReal Pro notation: "Bb7/G7" means two chords in one measure
+      // Extract only the second chord (after the slash) as requested
       let chordToParse = symbol.trim();
       if (chordToParse.includes('/')) {
         const parts = chordToParse.split('/');
         if (parts.length === 2) {
-          // Use the second chord (after slash)
+          // iReal Pro uses "/" to show two chords in one measure
+          // Extract the second chord only (e.g., "Bb7/G7" → "G7")
           chordToParse = parts[1].trim();
         }
       }
