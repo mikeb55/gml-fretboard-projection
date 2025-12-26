@@ -96,8 +96,8 @@
     </div>
     
     <div class="input-section">
-      <label for="chord-input">Chord Progression (optional - leave empty for demo):</label>
-      <textarea id="chord-input" placeholder="Bb7 | Eb7 | F7 | Bb7 | Gm7 | Cm7 | F7 | Bb7 | ..."></textarea>
+      <label for="chord-input">Chord Progression (16-bar example pre-loaded):</label>
+      <textarea id="chord-input">Bb7 | % | Eb7 | F7 | Bb7 | % | Eb7 | Bb7 | Gm7 | Cm7 | F7 | Bb7 | Eb7 | Edim7 | Bb7/G7 | Cm7/F7</textarea>
       <button id="parse-btn" style="margin-top: 10px; padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Load Custom Progression</button>
       <button id="load-demo-btn" style="margin-top: 10px; margin-left: 10px; padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Load 4-Bar Demo</button>
     </div>
@@ -173,15 +173,13 @@
       ui.loadBars(projectionOutputs);
     }
     
-    // Load initial 4-bar demo
-    loadBarsFromEngineOutputs(demoEngineOutputs);
-    
     // Parse button handler
     const parseBtn = document.getElementById('parse-btn');
     const chordInput = document.getElementById('chord-input');
     const loadDemoBtn = document.getElementById('load-demo-btn');
     
-    parseBtn.addEventListener('click', () => {
+    // Function to parse and load progression
+    function parseAndLoadProgression() {
       const text = chordInput.value.trim();
       if (!text) {
         alert('Please enter a chord progression');
@@ -213,7 +211,12 @@
         alert(`Error parsing chords: ${error.message}`);
         console.error(error);
       }
-    });
+    }
+    
+    parseBtn.addEventListener('click', parseAndLoadProgression);
+    
+    // Auto-load the 16-bar example on page load
+    parseAndLoadProgression();
     
     // Load demo button handler
     loadDemoBtn.addEventListener('click', () => {
