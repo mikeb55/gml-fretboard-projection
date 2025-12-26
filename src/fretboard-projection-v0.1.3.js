@@ -167,6 +167,7 @@ export class FretboardProjection {
 
     const sortedVoicing = [...voicing].sort((a, b) => a - b);
     const frets = new Array(6).fill(null);
+    const midiNotes = new Array(6).fill(null);
     const usedStrings = [];
 
     for (let i = 0; i < sortedVoicing.length; i++) {
@@ -181,6 +182,7 @@ export class FretboardProjection {
       if (fret < 0 || fret > this.maxFret) return null;
 
       frets[targetString - 1] = fret;
+      midiNotes[targetString - 1] = midiNote;
       usedStrings.push(targetString);
     }
 
@@ -244,6 +246,7 @@ export class FretboardProjection {
     return {
       stringSet: usedStrings,
       frets: frets,
+      midiNotes: midiNotes,
       positionWindow: [...this.positionWindow],
       anchorFret: anchorFret,
       movementType: movementType,

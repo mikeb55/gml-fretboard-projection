@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Chord Types Reference</title>
+  <style>
+    @media print {
+      body { margin: 0; padding: 20px; }
+      .page-break { page-break-after: always; }
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #34495e;
+      margin-top: 30px;
+      border-bottom: 2px solid #ecf0f1;
+      padding-bottom: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    code {
+      background-color: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+    .chord-output {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1em;
+      color: #27ae60;
+      font-weight: bold;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .note {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Complete Chord Types Reference</h1>
+  <p><strong>Generated:</strong> <span id="date"></span></p>
+  
+  <div class="section">
+    <h2>Supported Chord Types</h2>
+    <p>The app can spell <strong>9 chord types</strong> across triads and seventh chords:</p>
+    
+    <h3>Triads (3 notes)</h3>
+    <ul>
+      <li><code>"major"</code> - Major triad (root, major 3rd, perfect 5th)</li>
+      <li><code>"minor"</code> - Minor triad (root, minor 3rd, perfect 5th)</li>
+      <li><code>"diminished"</code> - Diminished triad (root, minor 3rd, diminished 5th)</li>
+      <li><code>"augmented"</code> - Augmented triad (root, major 3rd, augmented 5th)</li>
+    </ul>
+    
+    <h3>Seventh Chords (4 notes)</h3>
+    <ul>
+      <li><code>"maj7"</code> - Major 7th chord (major triad + major 7th)</li>
+      <li><code>"7"</code> - Dominant 7th chord (major triad + minor 7th)</li>
+      <li><code>"m7"</code> - Minor 7th chord (minor triad + minor 7th)</li>
+      <li><code>"dim7"</code> - Diminished 7th chord (diminished triad + diminished 7th)</li>
+      <li><code>"augmaj7"</code> - Augmented major 7th chord (augmented triad + major 7th)</li>
+    </ul>
+  </div>
+
+  <div class="section page-break">
+    <h2>All C Chords</h2>
+    <p><strong>Input Format:</strong> <code>spellChord("C", chordType)</code></p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Chord Name</th>
+          <th>Input</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>C major</td>
+          <td><code>spellChord("C", "major")</code></td>
+          <td class="chord-output">[C, E, G]</td>
+        </tr>
+        <tr>
+          <td>C minor</td>
+          <td><code>spellChord("C", "minor")</code></td>
+          <td class="chord-output">[C, E♭, G]</td>
+        </tr>
+        <tr>
+          <td>C diminished</td>
+          <td><code>spellChord("C", "diminished")</code></td>
+          <td class="chord-output">[C, E♭, G♭]</td>
+        </tr>
+        <tr>
+          <td>C augmented</td>
+          <td><code>spellChord("C", "augmented")</code></td>
+          <td class="chord-output">[C, E, G♯]</td>
+        </tr>
+        <tr>
+          <td>C major 7th</td>
+          <td><code>spellChord("C", "maj7")</code></td>
+          <td class="chord-output">[C, E, G, B]</td>
+        </tr>
+        <tr>
+          <td>C dominant 7th</td>
+          <td><code>spellChord("C", "7")</code></td>
+          <td class="chord-output">[C, E, G, B♭]</td>
+        </tr>
+        <tr>
+          <td>C minor 7th</td>
+          <td><code>spellChord("C", "m7")</code></td>
+          <td class="chord-output">[C, E♭, G, B♭]</td>
+        </tr>
+        <tr>
+          <td>C diminished 7th</td>
+          <td><code>spellChord("C", "dim7")</code></td>
+          <td class="chord-output">[C, E♭, G♭, B𝄫]</td>
+        </tr>
+        <tr>
+          <td>C augmented major 7th</td>
+          <td><code>spellChord("C", "augmaj7")</code></td>
+          <td class="chord-output">[C, E, G♯, B]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section page-break">
+    <h2>Root Name Formats</h2>
+    <p>Root names can include the following accidentals:</p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Natural</td>
+          <td class="note">C, D, E, F, G, A, B</td>
+        </tr>
+        <tr>
+          <td>Sharp</td>
+          <td class="note">C♯, D♯, F♯, G♯, A♯</td>
+        </tr>
+        <tr>
+          <td>Flat</td>
+          <td class="note">D♭, E♭, G♭, A♭, B♭</td>
+        </tr>
+        <tr>
+          <td>Double Sharp</td>
+          <td class="note">C𝄪, D𝄪, F𝄪, G𝄪, A𝄪</td>
+        </tr>
+        <tr>
+          <td>Double Flat</td>
+          <td class="note">C𝄫, D𝄫, E𝄫, F𝄫, G𝄫, A𝄫, B𝄫</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section page-break">
+    <h2>Examples by Root</h2>
+    
+    <h3>Natural Roots</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Root</th>
+          <th>Major</th>
+          <th>Minor</th>
+          <th>Major 7th</th>
+          <th>Dominant 7th</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>C</td>
+          <td>[C, E, G]</td>
+          <td>[C, E♭, G]</td>
+          <td>[C, E, G, B]</td>
+          <td>[C, E, G, B♭]</td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td>[D, F♯, A]</td>
+          <td>[D, F, A]</td>
+          <td>[D, F♯, A, C♯]</td>
+          <td>[D, F♯, A, C]</td>
+        </tr>
+        <tr>
+          <td>E</td>
+          <td>[E, G♯, B]</td>
+          <td>[E, G, B]</td>
+          <td>[E, G♯, B, D♯]</td>
+          <td>[E, G♯, B, D]</td>
+        </tr>
+        <tr>
+          <td>F</td>
+          <td>[F, A, C]</td>
+          <td>[F, A♭, C]</td>
+          <td>[F, A, C, E]</td>
+          <td>[F, A, C, E♭]</td>
+        </tr>
+        <tr>
+          <td>G</td>
+          <td>[G, B, D]</td>
+          <td>[G, B♭, D]</td>
+          <td>[G, B, D, F♯]</td>
+          <td>[G, B, D, F]</td>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>[A, C♯, E]</td>
+          <td>[A, C, E]</td>
+          <td>[A, C♯, E, G♯]</td>
+          <td>[A, C♯, E, G]</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>[B, D♯, F♯]</td>
+          <td>[B, D, F♯]</td>
+          <td>[B, D♯, F♯, A♯]</td>
+          <td>[B, D♯, F♯, A]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section page-break">
+    <h2>Rare/Theoretical Keys</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Chord</th>
+          <th>Input</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>C♯ major</td>
+          <td><code>spellChord("C♯", "major")</code></td>
+          <td class="chord-output">[C♯, E♯, G♯]</td>
+        </tr>
+        <tr>
+          <td>G♯ major</td>
+          <td><code>spellChord("G♯", "major")</code></td>
+          <td class="chord-output">[G♯, B♯, D♯]</td>
+        </tr>
+        <tr>
+          <td>A♯ major</td>
+          <td><code>spellChord("A♯", "major")</code></td>
+          <td class="chord-output">[A♯, C𝄪, E♯]</td>
+        </tr>
+        <tr>
+          <td>C♭ major</td>
+          <td><code>spellChord("C♭", "major")</code></td>
+          <td class="chord-output">[C♭, E♭, G♭]</td>
+        </tr>
+        <tr>
+          <td>F♭ minor</td>
+          <td><code>spellChord("F♭", "minor")</code></td>
+          <td class="chord-output">[F♭, A𝄫, C♭]</td>
+        </tr>
+        <tr>
+          <td>G♭ minor</td>
+          <td><code>spellChord("G♭", "minor")</code></td>
+          <td class="chord-output">[G♭, B𝄫, D♭]</td>
+        </tr>
+        <tr>
+          <td>B𝄫 major</td>
+          <td><code>spellChord("B𝄫", "major")</code></td>
+          <td class="chord-output">[B𝄫, D♭, F♭]</td>
+        </tr>
+        <tr>
+          <td>D♯ minor</td>
+          <td><code>spellChord("D♯", "minor")</code></td>
+          <td class="chord-output">[D♯, F♯, A♯]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Usage Notes</h2>
+    <ul>
+      <li>The app uses <strong>deterministic chord spelling</strong> that enforces letter-name integrity</li>
+      <li>Each chord tone uses a different letter name (C-E-G, not C-F♭-G)</li>
+      <li>Accidentals are calculated to match required interval qualities</li>
+      <li>The UI automatically infers chord type from MIDI notes when displaying</li>
+      <li>All spellings follow standard music theory conventions</li>
+    </ul>
+    
+    <h2>Limitations</h2>
+    <p>Currently <strong>not supported</strong>:</p>
+    <ul>
+      <li>Extended chords (9th, 11th, 13th)</li>
+      <li>Suspended chords (sus2, sus4)</li>
+      <li>Add chords (add9, add11)</li>
+      <li>Altered chords (7♭9, 7♯11, etc.)</li>
+      <li>Slash chords (inversions with different bass notes)</li>
+    </ul>
+  </div>
+
+  <script>
+    document.getElementById('date').textContent = new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  </script>
+</body>
+</html>
+

@@ -24,7 +24,7 @@ const engineOutputs = [
     reasonCodes: [{ code: 'BARRY_HARRIS_INVERSION', message: 'Barry Harris inversion' }]
   },
   {
-    voicing: [55, 59, 62, 67], // G7
+      voicing: [55, 59, 62, 65], // G7: G-B-D-F (corrected)
     inversion: 'root',
     registerPosition: 'mid',
     hold: false,
