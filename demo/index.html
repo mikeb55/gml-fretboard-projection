@@ -128,7 +128,7 @@
     // Use actual projection layer to generate sample data with midiNotes
     const projection = new FretboardProjection();
     
-    // Sample engine outputs (simulated) - 4-bar demo
+    // 4-bar demo (only loaded when user clicks "Load 4-Bar Demo" button)
     const demoEngineOutputs = [
       {
         voicing: [48, 52, 55, 59], // Cmaj7: C-E-G-B
@@ -218,11 +218,17 @@
     
     parseBtn.addEventListener('click', parseAndLoadProgression);
     
-    // Auto-load the 16-bar example on page load (use setTimeout to ensure DOM is ready)
-    setTimeout(() => {
-      console.log('Auto-loading progression...');
+    // Auto-load the progression on page load - ensure DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM ready, auto-loading progression...');
+        parseAndLoadProgression();
+      });
+    } else {
+      // DOM already ready
+      console.log('DOM already ready, auto-loading progression...');
       parseAndLoadProgression();
-    }, 100);
+    }
     
     // Load demo button handler
     loadDemoBtn.addEventListener('click', () => {
