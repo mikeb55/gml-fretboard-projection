@@ -1,0 +1,16 @@
+{
+  "id": "v0.5",
+  "name": "Voicing + register legality gates",
+  "requirements": [
+    "add constraints: max spread, no voice crossing (configurable), instrument constraints hook",
+    "blocked moves must include reason codes"
+  ],
+  "tests": [
+    "tests/test-voicing-legality.js"
+  ],
+  "minRandomizedChecks": 40,
+  "implementationFiles": [
+    "src/harmonic-engine-state.js"
+  ]
+}
+

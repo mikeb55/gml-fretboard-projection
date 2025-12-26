@@ -272,3 +272,4 @@ function inferBarCountFromChords(chords) {
   return count; // Return actual count if not close to common form
 }
 
+

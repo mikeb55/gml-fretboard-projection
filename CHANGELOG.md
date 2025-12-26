@@ -1,6 +1,107 @@
+## [0.2.3] - Major 6 is first-class
+
+### Added
+- Stage v0.1 implementation: Major 6 is first-class
+- parse C6 / Cmaj6 correctly
+- spell intervals [0,4,7,9]
+- do NOT misparse C13 as C6
+- add ReasonCodes for MAJ6 tonic
+
+### Testing
+- All stage v0.1 tests pass
+- All checks pass
+
+---
+
 # Changelog
 
 All notable changes to the Fretboard Projection Layer are documented in this file.
+
+## [v0.2.1] - Barry Harris Foundations 0 Compliance: MAJ6 Chord Support
+
+### Added
+- **MAJ6 chord type** as first-class chord type with intervals [0, 4, 7, 9]
+- Chord symbol parsing for `C6` and `Cmaj6` (but not `C13`)
+- Tonic normalization system with `preferTonicMaj6` option
+- Reason codes: `TONIC_MAJ6_HOME`, `NORMALIZED_TONIC_MAJ7_TO_MAJ6`
+- Comprehensive test suite (`tests/test-maj6-foundations.js`) with 87+ test cases
+- Tonic normalization module (`src/tonic-normalization.js`)
+
+### Changed
+- `parseChordSymbol()` now accepts options object for tonic normalization
+- Backward compatibility maintained: old API (just symbol and octave) still works
+- `parseChordProgression()` now supports tonic normalization options
+
+### Technical Details
+- MAJ6 intervals: root (0), major 3rd (4), perfect 5th (7), major 6th (9)
+- Letter-name integrity: MAJ6 uses root–3rd–5th–6th letter names (e.g., C–E–G–A)
+- Parser correctly distinguishes `C6`/`Cmaj6` from `C13` (13th chords not parsed as 6th)
+- Tonic normalization: when `preferTonicMaj6: true` and key root matches chord root, Imaj7 → maj6
+
+### Testing
+- All MAJ6 tests pass (87/87, 100% success rate)
+- Verified MAJ6 intervals exactly [0, 4, 7, 9] across 40+ randomized roots
+- Confirmed C6/Cmaj6 parse correctly
+- Confirmed C13 does NOT parse as MAJ6
+- Verified interval qualities (major 3rd, perfect 5th, major 6th)
+- Tonic normalization tests pass
+
+### Visual / Musical Impact
+**MAJ6 is now a first-class chord type usable as tonic.** The system supports Barry Harris Foundations 0 compliance by providing stable tonic-compatible structures. When tonic normalization is enabled, in-key Imaj7 chords are automatically normalized to MAJ6 internally, maintaining the Foundations 0 approach while preserving user-facing symbols. This enables proper Barry Harris voicing generation where the 6th replaces the 7th in tonic contexts.
+
+---
+
+## [v0.2.0] - Bar Count Engine (Screenshot-Driven, No Silent Defaults)
+
+### Added
+- Bar count engine test suite (`tests/test-bar-count-engine-v0.2.0.js`)
+- Chart fixtures for testing (`tests/fixtures/chart-fixtures.js`)
+- `npm run test:bar-count` command
+- Support for 8, 12, 16, 24, 32 bar forms
+- Navigation tests to verify final bar accessibility
+
+### Changed
+- Bar count detection now uses visual evidence first, then text parsing, then musical form inference
+- NEVER defaults to 4 bars - explicit fail-safe rules
+
+### Fixed
+- Bar count now matches chart length (12-bar blues, 32-bar AABA, etc.)
+- Navigation can reach final bar in all tested forms
+- No silent fallback to 4 bars
+
+### Testing
+- All bar count tests pass (11/11)
+- Tests verify navigation reaches final bar
+- Tests verify no reset to bar 4
+
+### Visual / Musical Impact
+**Bar count now accurately reflects chart length.** The system properly detects and handles various musical forms (blues, AABA, short forms) without defaulting to 4 bars. Navigation works correctly for all bar counts.
+
+---
+
+## [v0.1.0] - Test Harness + Baseline Audit
+
+### Added
+- Baseline audit test suite (`tests/test-baseline-audit-v0.1.0.js`)
+- `npm run test:baseline` command
+- Tests that document known bugs (expected to fail initially)
+- `docs/roadmap.md` - Version roadmap and planning
+- `docs/constraints.md` - Constraint definitions (initial draft)
+
+### Known Issues Documented
+- **BUG A**: 4-bar ceiling - Bar count must match iReal Pro screenshot chart length
+- **BUG B**: Always 6-4 voicing bias - Voicing engine must generate multiple playable options
+
+### Testing
+- Baseline audit tests run and document failures
+- Tests verify bar count is NOT capped at 4
+- Tests verify voicing diversity (not always [6,5,4,3] string set)
+- Tests verify inversion distribution is not degenerate
+
+### Visual / Musical Impact
+**Baseline established for future fixes.** The test harness now documents the known bugs that need to be addressed in subsequent versions. Tests are expected to fail initially, demonstrating the issues that need fixing.
+
+---
 
 ## [v0.1.3] - Long-Form Stability Refinements
 

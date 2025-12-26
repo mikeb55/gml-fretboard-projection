@@ -38,3 +38,4 @@ const noteNames = contextMidiNotes.map(midi => {
 console.log('Note names:', noteNames);
 console.log('Expected: [C#, E#, G#] or [C#, F, G#]');
 
+

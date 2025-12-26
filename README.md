@@ -162,6 +162,11 @@ Run all tests:
 npm test
 ```
 
+Run baseline audit tests (documents known bugs):
+```bash
+npm run test:baseline
+```
+
 Run version-specific tests:
 ```bash
 npm run test:v0.1.0
@@ -182,6 +187,100 @@ Each version has 40+ test cycles covering:
 ## Version History
 
 See [CHANGELOG.md](./CHANGELOG.md) for detailed version history and visual/musical impact descriptions.
+
+## Roadmap
+
+See [docs/roadmap.md](./docs/roadmap.md) for the version roadmap and planned features.
+
+## Constraints
+
+See [docs/constraints.md](./docs/constraints.md) for the Labyrinth of Limitations constraint system.
+
+## Supported Chord Types
+
+The chord spelling system supports the following chord types:
+
+### Triads (3 notes)
+- **major** - Major triad (root, major 3rd, perfect 5th)
+- **minor** - Minor triad (root, minor 3rd, perfect 5th)
+- **diminished** - Diminished triad (root, minor 3rd, diminished 5th)
+- **augmented** - Augmented triad (root, major 3rd, augmented 5th)
+
+### Seventh Chords (4 notes)
+- **maj7** - Major 7th chord (major triad + major 7th)
+- **7** - Dominant 7th chord (major triad + minor 7th)
+- **m7** - Minor 7th chord (minor triad + minor 7th)
+- **dim7** - Diminished 7th chord (diminished triad + diminished 7th)
+- **augmaj7** - Augmented major 7th chord (augmented triad + major 7th)
+
+### Major 6th Chords (Barry Harris Foundations 0)
+- **maj6** - Major 6th chord (major triad + major 6th) - Intervals: [0, 4, 7, 9]
+  - Parses as `C6` or `Cmaj6`
+  - Stable tonic-compatible structure per Barry Harris Foundations 0
+  - When `preferTonicMaj6` is enabled, in-key Imaj7 chords are normalized to maj6 internally
+
+### Tonic Normalization (Foundations Mode)
+
+When `preferTonicMaj6` is enabled in the chord parser:
+- Any in-key Imaj7 chord is internally normalized to MAJ6
+- User-facing symbols may remain unchanged
+- Internally, pitch spelling uses MAJ6 intervals [0, 4, 7, 9]
+- Reason codes: `TONIC_MAJ6_HOME`, `NORMALIZED_TONIC_MAJ7_TO_MAJ6`
+
+Example:
+```javascript
+import { parseChordSymbol } from './src/chord-symbol-parser.js';
+
+// With tonic normalization enabled
+const result = parseChordSymbol('Cmaj7', 4, {
+  keyRoot: 'C',
+  preferTonicMaj6: true
+});
+// Internally uses maj6 intervals, returns reason codes
+```
+
+## Autopilot System
+
+The repository includes an automated stage-gated development system that validates, tests, and commits stages incrementally.
+
+### Current Stage Status
+
+Check `stages/stages.json` for the current stage. Stages progress from v0.1 through v0.5.
+
+### Running Autopilot
+
+```bash
+npm run autopilot
+```
+
+The autopilot will:
+1. Validate the current stage by running tests and checks
+2. If stage passes: bump version, update CHANGELOG, commit, and tag
+3. If stage fails: report errors (you must fix and retry)
+4. Move to the next stage automatically on pass
+5. Never use silent fallbacks - illegal moves are BLOCKED with explicit reason codes
+
+### Stage Definitions
+
+- **v0.1**: Major 6 is first-class (parse C6/Cmaj6, spell [0,4,7,9], don't misparse C13)
+- **v0.2**: Add paired state I6 <-> vii°7 (state model, deterministic adjacent states)
+- **v0.3**: One-note motion enforcement (exactly one voice moves or BLOCK)
+- **v0.4**: State graph formalization (explicit API: getState, getAdjacentValidStates, tryMove)
+- **v0.5**: Voicing + register legality gates (max spread, no voice crossing, instrument constraints)
+
+### Manual Stage Testing
+
+You can test individual stages:
+```bash
+# Test foundations 0 checks
+node scripts/checks/foundations0_checks.mjs
+
+# Test state graph checks
+node scripts/checks/stategraph_checks.mjs v0.2
+
+# Test voiceleading checks
+node scripts/checks/voiceleading_checks.mjs v0.3
+```
 
 ## Dependencies
 

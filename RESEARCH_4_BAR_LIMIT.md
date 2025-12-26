@@ -129,3 +129,4 @@ node -e "import('./src/chord-symbol-parser.js').then(m => {
 - The most likely issue is browser cache or a silent failure in the auto-load process
 - Need to add more explicit error handling and verification
 
+

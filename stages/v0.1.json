@@ -1,0 +1,20 @@
+{
+  "id": "v0.1",
+  "name": "Major 6 is first-class",
+  "requirements": [
+    "parse C6 / Cmaj6 correctly",
+    "spell intervals [0,4,7,9]",
+    "do NOT misparse C13 as C6",
+    "add ReasonCodes for MAJ6 tonic"
+  ],
+  "tests": [
+    "tests/test-maj6-foundations.js"
+  ],
+  "minRandomizedChecks": 40,
+  "implementationFiles": [
+    "src/chord-spelling.js",
+    "src/chord-symbol-parser.js",
+    "src/tonic-normalization.js"
+  ]
+}
+

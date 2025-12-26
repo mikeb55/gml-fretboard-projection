@@ -1,0 +1,18 @@
+{
+  "id": "v0.2",
+  "name": "Add paired state I6 <-> vii°7",
+  "requirements": [
+    "engine exposes a 'state' model",
+    "each state returns deterministic adjacent valid states",
+    "include ReasonCodes for paired motion",
+    "add tests for determinism (same input -> same exits)"
+  ],
+  "tests": [
+    "tests/test-state-paired-motion.js"
+  ],
+  "minRandomizedChecks": 40,
+  "implementationFiles": [
+    "src/harmonic-engine-state.js"
+  ]
+}
+

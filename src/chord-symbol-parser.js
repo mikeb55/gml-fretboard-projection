@@ -4,25 +4,51 @@
  */
 
 import { spellChord } from './chord-spelling.js';
+import { normalizeTonicChord, ReasonCodes } from './tonic-normalization.js';
 
 /**
  * Parse a chord symbol and return MIDI voicing
  * @param {string} chordSymbol - Chord symbol (e.g., "Bb7", "Gm7", "C#maj7", "Edim7")
- * @param {number} octave - Base octave for root (default: 4)
- * @returns {number[]} - Array of MIDI note numbers
+ * @param {number|object} octaveOrOptions - Base octave for root (default: 4) or options object
+ * @param {object} options - Options for parsing (if octaveOrOptions is number)
+ * @param {string} options.keyRoot - Key root for tonic normalization (e.g., "C")
+ * @param {boolean} options.preferTonicMaj6 - Whether to normalize tonic maj7 to maj6 (default: false)
+ * @returns {number[]|{voicing: number[], reasonCodes: string[], normalizedType: string}} - MIDI voicing (array for backward compat) or full object
  */
-export function parseChordSymbol(chordSymbol, octave = 4) {
+export function parseChordSymbol(chordSymbol, octaveOrOptions = 4, options = {}) {
+  // Handle backward compatibility: if second param is a number, it's the octave
+  let octave = 4;
+  let keyRoot = null;
+  let preferTonicMaj6 = false;
+  let returnObject = false;
+  
+  if (typeof octaveOrOptions === 'number') {
+    octave = octaveOrOptions;
+    keyRoot = options.keyRoot || null;
+    preferTonicMaj6 = options.preferTonicMaj6 || false;
+  } else if (typeof octaveOrOptions === 'object') {
+    octave = octaveOrOptions.octave || 4;
+    keyRoot = octaveOrOptions.keyRoot || null;
+    preferTonicMaj6 = octaveOrOptions.preferTonicMaj6 || false;
+    returnObject = octaveOrOptions.returnObject !== false; // Default to true for new API
+  }
+  
   // Parse the chord symbol
   const parsed = parseChordName(chordSymbol);
   if (!parsed) {
     throw new Error(`Invalid chord symbol: ${chordSymbol}`);
   }
   
-  // Get the spelled chord
-  const spelledChord = spellChord(parsed.root, parsed.type);
+  // Apply tonic normalization if enabled
+  const normalized = normalizeTonicChord(parsed.root, parsed.type, keyRoot, preferTonicMaj6);
+  const finalType = normalized.type;
+  const reasonCodes = normalized.reasonCodes;
   
-  // Get intervals for this chord type
-  const intervals = getChordIntervals(parsed.type);
+  // Get the spelled chord using normalized type
+  const spelledChord = spellChord(parsed.root, finalType);
+  
+  // Get intervals for this chord type (use normalized type)
+  const intervals = getChordIntervals(finalType);
   
   // Get root MIDI value - use octave 3 for roots to keep voicings in guitar range
   const rootMidi = noteNameToMidiBase(parsed.root, 3);
@@ -36,7 +62,18 @@ export function parseChordSymbol(chordSymbol, octave = 4) {
     return midi;
   });
   
-  return midiNotes;
+  // Return format based on API version
+  if (returnObject) {
+    return {
+      voicing: midiNotes,
+      reasonCodes,
+      normalizedType: finalType,
+      originalType: parsed.type
+    };
+  } else {
+    // Backward compatibility: return just the array
+    return midiNotes;
+  }
 }
 
 /**
@@ -62,7 +99,14 @@ function parseChordName(chordSymbol) {
   // Determine chord type
   let type = 'major'; // default
   
-  if (rest.includes('dim7') || rest.includes('o7')) {
+  // Check for 6th chords BEFORE checking 7th chords to avoid misparsing
+  // Must check for "maj6" or standalone "6" but NOT "13" (which contains "6")
+  if (rest.includes('maj6') || rest.includes('M6') || rest.includes('Δ6')) {
+    type = 'maj6';
+  } else if (rest.includes('6') && !rest.includes('13')) {
+    // Standalone "6" (not part of "13") means major 6th
+    type = 'maj6';
+  } else if (rest.includes('dim7') || rest.includes('o7')) {
     type = 'dim7';
   } else if (rest.includes('dim') || rest.includes('o')) {
     type = 'diminished';
@@ -98,7 +142,8 @@ function getChordIntervals(chordType) {
     '7': [0, 4, 7, 10],
     'm7': [0, 3, 7, 10],
     'dim7': [0, 3, 6, 9],
-    'augmaj7': [0, 4, 8, 11]
+    'augmaj7': [0, 4, 8, 11],
+    'maj6': [0, 4, 7, 9]
   };
   
   return intervals[chordType] || [0, 4, 7];
@@ -145,9 +190,13 @@ function noteNameToMidiBase(noteName, octave = 4) {
  * Parse a chord progression from text
  * @param {string} text - Text with chord symbols (e.g., "Bb7 | Eb7 | F7 | Bb7")
  * @param {number} octave - Base octave for root (default: 4)
- * @returns {Array<{symbol: string, voicing: number[]}>} - Array of parsed chords
+ * @param {object} options - Options for parsing
+ * @param {string} options.keyRoot - Key root for tonic normalization (e.g., "C")
+ * @param {boolean} options.preferTonicMaj6 - Whether to normalize tonic maj7 to maj6 (default: false)
+ * @returns {Array<{symbol: string, voicing: number[], reasonCodes: string[], normalizedType: string}>} - Array of parsed chords
  */
-export function parseChordProgression(text, octave = 4) {
+export function parseChordProgression(text, octave = 4, options = {}) {
+  const { keyRoot = null, preferTonicMaj6 = false } = options;
   // Split by common delimiters
   const chords = text.split(/[|\s,]+/).filter(c => c.trim().length > 0);
   
@@ -170,8 +219,15 @@ export function parseChordProgression(text, octave = 4) {
         return null;
       }
       
-      const voicing = parseChordSymbol(chordToParse, octave);
-      return { symbol: chordToParse, voicing, originalSymbol: symbol.trim() };
+      const result = parseChordSymbol(chordToParse, octave, { keyRoot, preferTonicMaj6, returnObject: true });
+      return {
+        symbol: chordToParse,
+        voicing: result.voicing || result, // Handle both old (array) and new (object) formats
+        reasonCodes: result.reasonCodes || [],
+        normalizedType: result.normalizedType || result.type,
+        originalType: result.originalType,
+        originalSymbol: symbol.trim()
+      };
     } catch (error) {
       console.warn(`Failed to parse chord "${symbol}": ${error.message}`);
       return null;

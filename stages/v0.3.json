@@ -1,0 +1,17 @@
+{
+  "id": "v0.3",
+  "name": "One-note motion enforcement",
+  "requirements": [
+    "any transition must move exactly one voice (or BLOCK)",
+    "add voiceleading checks and tests"
+  ],
+  "tests": [
+    "tests/test-one-note-motion.js"
+  ],
+  "minRandomizedChecks": 40,
+  "implementationFiles": [
+    "src/harmonic-engine-state.js",
+    "scripts/checks/voiceleading_checks.mjs"
+  ]
+}
+

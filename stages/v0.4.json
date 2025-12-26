@@ -1,0 +1,17 @@
+{
+  "id": "v0.4",
+  "name": "State graph formalization",
+  "requirements": [
+    "implement explicit state graph API: getState(id), getAdjacentValidStates(id), tryMove(fromId, toId)",
+    "tryMove returns { ok: boolean, reasonCodes: [] }",
+    "illegal moves must be blocked, never substituted"
+  ],
+  "tests": [
+    "tests/test-state-graph-api.js"
+  ],
+  "minRandomizedChecks": 40,
+  "implementationFiles": [
+    "src/harmonic-engine-state.js"
+  ]
+}
+

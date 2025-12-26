@@ -96,3 +96,4 @@ The system should be tested with:
 
 **Bar detection verified — no 4-bar ceiling remains.**
 
+

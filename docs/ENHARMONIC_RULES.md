@@ -94,3 +94,4 @@ When given a **root note name** and a **chord type**, construct chord tones usin
 
 Always prioritize **correct theoretical spelling** over visual simplicity.
 
+

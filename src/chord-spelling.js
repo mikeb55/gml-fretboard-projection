@@ -131,7 +131,7 @@ function calculateAccidental(rootLetter, targetLetter, targetSemitones, rootSemi
 /**
  * Spell a chord algorithmically from root and chord type
  * @param {string} rootName - Root note name (e.g., "C", "C♯", "E♭", "G♯")
- * @param {string} chordType - Chord type: "major", "minor", "diminished", "augmented", "maj7", "7", "m7", "dim7", "augmaj7"
+ * @param {string} chordType - Chord type: "major", "minor", "diminished", "augmented", "maj7", "7", "m7", "dim7", "augmaj7", "maj6"
  * @returns {string[]} - Array of note names in order (root, 3rd, 5th, 7th if applicable)
  */
 export function spellChord(rootName, chordType) {
@@ -147,7 +147,8 @@ export function spellChord(rootName, chordType) {
     '7': [0, 4, 7, 10],           // root, major 3rd, perfect 5th, minor 7th (dominant)
     'm7': [0, 3, 7, 10],          // root, minor 3rd, perfect 5th, minor 7th
     'dim7': [0, 3, 6, 9],         // root, minor 3rd, diminished 5th, diminished 7th
-    'augmaj7': [0, 4, 8, 11]      // root, major 3rd, augmented 5th, major 7th
+    'augmaj7': [0, 4, 8, 11],     // root, major 3rd, augmented 5th, major 7th
+    'maj6': [0, 4, 7, 9]          // root, major 3rd, perfect 5th, major 6th (Barry Harris Foundations 0)
   };
   
   const chordIntervals = intervals[chordType];
@@ -163,7 +164,8 @@ export function spellChord(rootName, chordType) {
   // For each interval after the root
   for (let i = 1; i < chordIntervals.length; i++) {
     const intervalSemitones = chordIntervals[i];
-    const letterSteps = i === 1 ? 2 : (i === 2 ? 4 : 6); // 3rd = 2 steps, 5th = 4 steps, 7th = 6 steps
+    // 3rd = 2 steps, 5th = 4 steps, 6th = 5 steps, 7th = 6 steps
+    const letterSteps = i === 1 ? 2 : (i === 2 ? 4 : (i === 3 && intervalSemitones === 9 ? 5 : 6));
     
     const targetLetter = getLetterAbove(root.letter, letterSteps);
     const targetSemitones = (root.semitones + intervalSemitones) % 12;

@@ -1,0 +1,36 @@
+{
+  "currentStage": "v0.1",
+  "stages": [
+    {
+      "id": "v0.1",
+      "name": "Major 6 is first-class",
+      "file": "v0.1.json",
+      "checks": ["foundations0_checks"]
+    },
+    {
+      "id": "v0.2",
+      "name": "Add paired state I6 <-> vii°7",
+      "file": "v0.2.json",
+      "checks": ["foundations0_checks", "stategraph_checks"]
+    },
+    {
+      "id": "v0.3",
+      "name": "One-note motion enforcement",
+      "file": "v0.3.json",
+      "checks": ["foundations0_checks", "stategraph_checks", "voiceleading_checks"]
+    },
+    {
+      "id": "v0.4",
+      "name": "State graph formalization",
+      "file": "v0.4.json",
+      "checks": ["foundations0_checks", "stategraph_checks", "voiceleading_checks"]
+    },
+    {
+      "id": "v0.5",
+      "name": "Voicing + register legality gates",
+      "file": "v0.5.json",
+      "checks": ["foundations0_checks", "stategraph_checks", "voiceleading_checks"]
+    }
+  ]
+}
+

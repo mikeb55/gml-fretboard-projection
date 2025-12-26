@@ -25,6 +25,7 @@ let failed = 0;
 
 for (const test of testChords) {
   try {
+    // parseChordSymbol returns array for backward compatibility when called with just symbol
     const result = parseChordSymbol(test.symbol);
     const matches = JSON.stringify(result) === JSON.stringify(test.expected);
     
@@ -54,7 +55,9 @@ const parsed = parseChordProgression(progression);
 console.log(`Input: "${progression}"`);
 console.log(`Parsed ${parsed.length} chords:`);
 parsed.forEach((chord, i) => {
-  console.log(`  ${i + 1}. ${chord.symbol}: [${chord.voicing.join(', ')}]`);
+  // Handle both old format (voicing is array) and new format (voicing is property)
+  const voicing = Array.isArray(chord.voicing) ? chord.voicing : (chord.voicing || []);
+  console.log(`  ${i + 1}. ${chord.symbol}: [${voicing.join(', ')}]`);
 });
 
 process.exit(failed > 0 ? 1 : 0);
