@@ -1,6 +1,6 @@
 {
   "name": "gml-fretboard-projection",
-  "version": "0.5.3",
+  "version": "0.6.3",
   "description": "Fretboard Projection Layer - Maps harmonic engine voicings to guitar strings and frets",
   "main": "src/fretboard-projection-v0.1.3.js",
   "type": "module",

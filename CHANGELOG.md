@@ -1,3 +1,16 @@
+## [0.6.3] - Voicing + register legality gates
+
+### Added
+- Stage v0.5 implementation: Voicing + register legality gates
+- add constraints: max spread, no voice crossing (configurable), instrument constraints hook
+- blocked moves must include reason codes
+
+### Testing
+- All stage v0.5 tests pass
+- All checks pass
+
+---
+
 ## [0.5.3] - State graph formalization
 
 ### Added
