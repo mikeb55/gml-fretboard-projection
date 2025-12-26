@@ -153,8 +153,24 @@ export function parseChordProgression(text, octave = 4) {
   
   return chords.map(symbol => {
     try {
-      const voicing = parseChordSymbol(symbol.trim(), octave);
-      return { symbol: symbol.trim(), voicing };
+      // Handle slash chords (e.g., "Bb7/G7" or "Cm7/F7")
+      // Extract only the second chord (after the slash)
+      let chordToParse = symbol.trim();
+      if (chordToParse.includes('/')) {
+        const parts = chordToParse.split('/');
+        if (parts.length === 2) {
+          // Use the second chord (after slash)
+          chordToParse = parts[1].trim();
+        }
+      }
+      
+      // Skip if it's just a repeat symbol
+      if (chordToParse === '%' || chordToParse === '') {
+        return null;
+      }
+      
+      const voicing = parseChordSymbol(chordToParse, octave);
+      return { symbol: chordToParse, voicing, originalSymbol: symbol.trim() };
     } catch (error) {
       console.warn(`Failed to parse chord "${symbol}": ${error.message}`);
       return null;
