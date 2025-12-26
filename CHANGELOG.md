@@ -1,3 +1,18 @@
+## [0.3.3] - Add paired state I6 <-> vii°7
+
+### Added
+- Stage v0.2 implementation: Add paired state I6 <-> vii°7
+- engine exposes a 'state' model
+- each state returns deterministic adjacent valid states
+- include ReasonCodes for paired motion
+- add tests for determinism (same input -> same exits)
+
+### Testing
+- All stage v0.2 tests pass
+- All checks pass
+
+---
+
 ## [0.2.3] - Major 6 is first-class
 
 ### Added
