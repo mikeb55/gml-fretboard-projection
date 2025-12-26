@@ -1,3 +1,17 @@
+## [0.5.3] - State graph formalization
+
+### Added
+- Stage v0.4 implementation: State graph formalization
+- implement explicit state graph API: getState(id), getAdjacentValidStates(id), tryMove(fromId, toId)
+- tryMove returns { ok: boolean, reasonCodes: [] }
+- illegal moves must be blocked, never substituted
+
+### Testing
+- All stage v0.4 tests pass
+- All checks pass
+
+---
+
 ## [0.4.3] - One-note motion enforcement
 
 ### Added
