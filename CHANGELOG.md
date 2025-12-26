@@ -1,3 +1,16 @@
+## [0.4.3] - One-note motion enforcement
+
+### Added
+- Stage v0.3 implementation: One-note motion enforcement
+- any transition must move exactly one voice (or BLOCK)
+- add voiceleading checks and tests
+
+### Testing
+- All stage v0.3 tests pass
+- All checks pass
+
+---
+
 ## [0.3.3] - Add paired state I6 <-> vii°7
 
 ### Added
